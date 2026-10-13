@@ -22,7 +22,7 @@ Execution: same-session after Milestone 1. Verify Codex/Claude non-interactive f
 ### Remaining P0 work
 
 1. Produce the now-tested sample edit, structured Claude review, deterministic gates and local commit through one durable CAF Run. The direct experiment saved these locally, but did not submit or execute a queued Run.
-2. Add a bounded worker process for the shared queue, repository and revision verification, isolated worktrees and real runtime calls. Queue-side cancellation, lease renewal and expired-Run quarantine have tested contracts; Windows orphan CLI cleanup and crash reconciliation still block safe automatic dispatch or retry.
+2. Add a bounded worker process for the shared queue, repository and revision verification, isolated worktrees and real runtime calls. Queue-side cancellation, lease renewal and expired-Run quarantine have tested contracts. Windows Job Object containment passed live tests, but host crash reconciliation and breakaway-process containment still block safe automatic dispatch or retry.
 3. Extend the Compose `core` group beyond the tested API/PostgreSQL slice only as those components become runnable; test readiness, shutdown, persistence and restart recovery. Redis integration remains a design decision for the first durable queue because PostgreSQL currently holds queued Runs.
 4. Persist the remaining events, checkpoints, findings, gate results and metrics required by SPEC, then run comparable A/B/C experiments with identical fixture, controls and measured cost. Mode A's model backend and subscription assumptions need verification.
 

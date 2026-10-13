@@ -4,7 +4,7 @@ Plan: [P0 synthetic vertical slice](plans/2026-10-13-p0-vertical-slice.md).
 
 ## In Progress
 - Preserve and verify a complete queued code-change artifact with a structured cross-provider review and commit from an isolated worktree.
-- Resolve Windows orphan-child cleanup, then connect queued API runs to a bounded host worker and real runtime with tested restart behavior.
+- Resolve host-crash and breakaway-process isolation, then connect queued API runs to a bounded host worker and real runtime with tested restart behavior. Windows Job Object orphan cleanup passed local live tests.
 
 ## To Do
 - Add the production worker/runtime boundary to the API/PostgreSQL Compose slice; verify cancellation, lease heartbeat and recovery.
