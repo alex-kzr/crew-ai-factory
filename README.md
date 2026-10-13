@@ -4,6 +4,11 @@ CAF is an independent experiment in orchestrating Codex CLI and Claude Code as e
 
 **Status:** the first synthetic P0 slice is verified: a provider-neutral runtime contract, sample fixture, asyncio baseline, CrewAI Flow mode, and external-worktree integration test. Host Codex/Claude adapters and an authenticated control API are implemented. A bounded Codex edit on the sample fixture passed both acceptance suites; Claude approved its saved diff with no findings, and the reviewed change is a local, unpushed sample commit. This isolated CLI experiment is not a queued production run. The provisional Compose `core` slice starts API and PostgreSQL with healthy containers, reachable loopback endpoints, tested task intake, cancellation and transactional queue operations. A test-only worker bridge and an executor-neutral lease-aware dispatch boundary passed isolated database tests. A production worker daemon, verified orphan CLI cleanup, complete SPEC core group, UI and benchmark verdict remain pending. [SPEC.md](SPEC.md) is the authoritative source for the full target and acceptance criteria.
 
+The `caf-web-ui` submodule contains an **offline P0 contract preview** with a
+task JSON builder and local Run inspector. Its test example is fabricated;
+the page does not submit tasks or contact the API. See [its boundary and
+checks](docs/development/ui-preview-and-cli-gates.md).
+
 ## Navigate
 
 - [Documentation index](docs/README.md)

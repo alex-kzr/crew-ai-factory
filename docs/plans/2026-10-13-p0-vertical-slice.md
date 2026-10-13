@@ -29,6 +29,14 @@ Execution: same-session after Milestone 1. Verify Codex/Claude non-interactive f
 6. [ ] Extend and test the complete `core` group and optional-group status/log commands; keep unrelated containers and shared dependencies safe. Redis remains a design decision because PostgreSQL currently holds queued Runs.
 7. [ ] Persist the remaining SPEC events, checkpoints, findings, gate results and metrics, then run comparable A/B/C experiments on identical inputs. Verify Mode A's manager backend and separate API-model cost.
 
+An [offline UI preview](../development/ui-preview-and-cli-gates.md) now covers
+task-body validation and local inspection of Run status, available gate/review
+fields and quarantine. It has no authenticated browser-to-API path, live
+events or service controls; these remain part of the SPEC P4/UI work rather
+than a completed P0 service. The same document records the minimal planned
+filtered-environment CLI check; provider execution and real CLI recovery
+remain open.
+
 ## Milestone 3: comparable experiment
 
 Execution: after shared schema and gates are stable. Run Modes A, B and C on identical sample commit/task/limits. Verify CrewAI manager/backend requirements, separate model API cost from CLI usage, record outcomes and write a verdict under `docs/experiments/`. Later P2–P4 remain governed by [scope](../requirements/scope.md).

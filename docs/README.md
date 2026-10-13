@@ -11,6 +11,7 @@
 | Host worker trust and queue transport | [Worker transport](architecture/worker-transport.md) |
 | Scoped host HTTP evidence | [One-Run synthetic HTTP result](experiments/2026-10-13-scoped-http-procedure.md), [offline workspace and recovery check](experiments/2026-10-13-offline-workspace-and-recovery.md), [PostgreSQL crash/restart check](experiments/2026-10-13-postgres-http-crash-restart.md) |
 | Repository ownership | [Repositories](development/repositories.md) |
+| Offline UI and remaining CLI gates | [UI preview and host checks](development/ui-preview-and-cli-gates.md) |
 | P0 execution | [Plan](plans/2026-10-13-p0-vertical-slice.md), [board](kanban.md), [environment facts](development/environment.md) |
 | Experiment evidence | [Synthetic baseline](experiments/2026-10-13-synthetic-baseline.md), [Flow, CLI and API follow-up](experiments/2026-10-13-flow-cli-and-api.md), [P0 recovery and queued sample](experiments/2026-10-13-p0-recovery-and-code.md), [worker transport and daemon](experiments/2026-10-13-worker-transport-and-daemon.md) |
 | Compose grouping and local operations | [Local development](operations/local-development.md) |
