@@ -36,8 +36,10 @@ live core. No automatic real CLI dispatch was enabled.
 
 ## Next gate
 
-After an explicit credential grant, run a live loopback HTTP worker transport
-test against Compose, verify token separation and revocation, and review the
-host process and workspace permission boundary. Keep the real CLI worker
-fixture allowlisted to its test database and sample repository until a wider
-trust decision is made.
+After an explicit temporary grant, run the [one-Run synthetic HTTP check]
+(2026-10-13-scoped-http-procedure.md) using an isolated host API and test
+database. Verify live loopback exchange, expiry and revocation. Provider login
+under the new filtered child environment and host workspace mapping need
+separate tests before any real CLI worker grant. The earlier daemon proof above
+used direct PostgreSQL, so its observations are unchanged by the later API
+grant implementation.

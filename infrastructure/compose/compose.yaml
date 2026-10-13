@@ -26,7 +26,6 @@ services:
     environment:
       CAF_DATABASE_URL: postgresql://caf:${CAF_POSTGRES_PASSWORD:-}@postgres:5432/caf
       CAF_API_TOKEN: ${CAF_API_TOKEN:-}
-      CAF_WORKER_TOKEN: ${CAF_WORKER_TOKEN:-}
     ports:
       - 127.0.0.1:${CAF_API_PORT:-8123}:8000
     depends_on:

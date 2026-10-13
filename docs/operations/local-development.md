@@ -6,6 +6,13 @@ Source: [SPEC §§5-6, 12, 15-16](../../SPEC.md). Target: Windows 11 with WSL2 a
 
 The Compose file at [`infrastructure/compose/compose.yaml`](../../infrastructure/compose/compose.yaml) defines one project named `caf` and one `core` profile containing **PostgreSQL and control-api only**. The API image uses the child repository's Dockerfile; its startup command migrates the P0 schema and starts Uvicorn. PostgreSQL has no published port. The API publishes container port 8000 on host `127.0.0.1:8123` by default; set `CAF_API_PORT` to choose another host port. Both services share the internal `caf_private` network; only the API also joins `caf_edge` so its loopback host port works. Both have readiness health checks. Database data persists in the Compose-managed `caf_postgres_data` volume. `down core` stops the two containers without removing data.
 
+Core Compose does not pass through `CAF_WORKER_TOKEN` or any worker grant
+settings. The published code for a scoped worker API is disabled there. The
+next proposed HTTP check uses a separate temporary host API bound to loopback
+and the isolated test database; see its [procedure]
+(../experiments/2026-10-13-scoped-http-procedure.md). Do not set worker grant
+variables or start a real CLI worker as part of ordinary `up core`.
+
 **Verification:** `docker compose config --quiet` and the wrapper's Bash syntax/help/config commands passed on 2026-10-13. After Docker Desktop recovered, `up core` built the API image and both containers reached healthy. Host loopback liveness/readiness and live PostgreSQL task intake passed; see [measured results](#live-core-check-after-docker-recovery). The `core` profile is a provisional API/database slice, **not** the complete SPEC core group. The persistent daemon exists only in the separate synthetic test profile; core has no running worker. Redis is not used by this slice. `ui`, `observability`, `dev` and `all` deliberately return unavailable from the wrapper rather than starting a partial stack.
 
 Opt-in experiment profiles are separate from `core`: `p0-test` builds a
