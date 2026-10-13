@@ -10,7 +10,7 @@ Source: [SPEC §4](../../SPEC.md). The umbrella pins Git commit IDs for these fi
 | `repositories/caf-web-ui` | `https://github.com/alex-kzr/caf-web-ui` | UI |
 | `repositories/caf-sample-app` | `https://github.com/alex-kzr/caf-sample-app` | Reproducible coding target |
 
-The umbrella `origin` remains `https://github.com/alex-kzr/crew-ai-factory`. On 2026-10-13, read-only `git ls-remote` returned no refs for each child URL. No push was performed. Their pinned initial commits exist locally only until published. `.gitmodules` now contains the actual GitHub URLs, but a fresh checkout cannot initialize the submodules until those commits are pushed.
+The umbrella `origin` remains `https://github.com/alex-kzr/crew-ai-factory`. On 2026-10-13, the five initial `main` commits and umbrella commit `0fbd69f` were pushed. Read-only remote SHA checks matched all six local commits, and a fresh `git clone --recurse-submodules` checked out all five pinned gitlinks.
 
 ## Publication sequence
 

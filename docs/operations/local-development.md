@@ -4,7 +4,7 @@ Source: [SPEC §§5–6, 12, 15–16](../../SPEC.md). Target: Windows 11, WSL2 a
 
 ## Group model
 
-Use Docker Compose `profiles` for actual container selection and a tested `scripts/services.sh` wrapper for human-friendly groups. `core` includes API, worker, Postgres, Redis and runtime integration. `ui` adds web UI and dependencies; `observability` adds optional telemetry; `dev` adds local utilities; `all` selects all appropriate profiles. Base stores needed by active groups must be started as dependencies. If runtime executes on WSL host, status and readiness must identify it as a host process, never a Docker service.
+Use one Docker Compose project named `caf` and Docker Compose `profiles` for actual container selection and a tested `scripts/services.sh` wrapper for human-friendly groups. `core` includes API, worker, Postgres, Redis and runtime integration. `ui` adds web UI and dependencies; `observability` adds optional telemetry; `dev` adds local utilities; `all` selects all appropriate profiles. Base stores needed by active groups must be started as dependencies. If runtime executes on WSL host, status and readiness must identify it as a host process, never a Docker service.
 
 The wrapper must implement and test `up core`, `up ui`, `up all`, `down core`, `status`, and `logs <service-or-group>`, plus document `config`, `build`, `ps` and safe cleanup. `down core` must not remove stores still needed by UI or observability; track active group ownership or reject unsafe partial stops. Compose profile selection alone does not give this behavior. If `configs/service-groups.yaml` is introduced, validate its service names against rendered Compose config.
 
@@ -16,4 +16,4 @@ Either Docker with narrow workspace/auth mounts and demonstrated CLI auth or a W
 
 ## Bootstrap today
 
-Local submodule checkouts exist and `.gitmodules` uses the actual GitHub URLs; a fresh checkout still cannot initialize them until their pinned commits are pushed. The umbrella bootstrap command and Compose wrapper are pending implementation. See [repository publication](../development/repositories.md). No runtime command should be inferred from this design page.
+Local submodule checkouts exist and `.gitmodules` uses the actual GitHub URLs. A fresh recursive clone succeeded on 2026-10-13; `bash scripts/bootstrap.sh` initializes an existing checkout. The Compose wrapper is pending implementation. See [repository publication](../development/repositories.md). No runtime command should be inferred from this design page.
