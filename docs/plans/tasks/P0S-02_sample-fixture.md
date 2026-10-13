@@ -13,7 +13,7 @@ In Progress
 - Maximum repair attempts: 2
 - Documentation impact: `docs/experiments/**`
 - Verification commands:
-  - `repositories/caf-sample-app` -> `uv run pytest`
+  - `repositories/caf-sample-app` -> `python -m unittest discover -s tests -p test_baseline.py` (with `PYTHONPATH=src`)
 - Blocking conditions: none
 
 ## Purpose
