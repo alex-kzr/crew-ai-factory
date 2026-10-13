@@ -3,8 +3,8 @@
 Plan: [P0 synthetic vertical slice](plans/2026-10-13-p0-vertical-slice.md).
 
 ## In Progress
-- Verify real isolated Codex/Claude code changes and cross-provider review using the now-explicit CLI executable selection.
-- Connect queued API runs to a bounded production worker and real runtime, with cancellation and tested restart behavior.
+- Preserve and verify a complete queued code-change artifact with a structured cross-provider review and commit from an isolated worktree.
+- Resolve Windows orphan-child cleanup, then connect queued API runs to a bounded host worker and real runtime with tested restart behavior.
 
 ## To Do
 - Add the production worker/runtime boundary to the API/PostgreSQL Compose slice; verify cancellation, lease heartbeat and recovery.
@@ -21,3 +21,5 @@ Plan: [P0 synthetic vertical slice](plans/2026-10-13-p0-vertical-slice.md).
 - Implement authenticated API task intake and a provisional API/PostgreSQL Compose slice; live startup, readiness, bearer auth, idempotency and API-restart persistence passed.
 - Implement transactional PostgreSQL queue claim, lease renewal and owner-guarded completion; isolated live database tests passed.
 - Prove one queue-to-synthetic-runtime handoff in a dedicated test database; persist a labeled JSON artifact without starting a CLI or draining the shared CAF queue.
+- Add guarded API cancellation and expired-lease quarantine; test claim/ACK/cancel/idempotency in isolated PostgreSQL and worker unit tests.
+- Prove one bounded Codex sample code edit in an external worktree with both acceptance suites passing, and a separate Claude no-tools review of the actual diff returning `approved=true`. Neither experiment wrote to the CAF queue.
