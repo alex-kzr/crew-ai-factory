@@ -15,6 +15,6 @@ CAF is an independent experiment in orchestrating Codex CLI and Claude Code as e
 - [Decisions and open questions](docs/architecture/decisions/0001-repository-and-runtime.md)
 - [Repository publication procedure](docs/development/repositories.md)
 
-The `repositories/` entries are independently versioned local Git submodules. Their current URLs are local staging paths and **cannot bootstrap on another machine**. Publish child repositories and replace `.gitmodules` URLs before publishing the umbrella repo. See [repository instructions](docs/development/repositories.md).
+The `repositories/` entries are independently versioned Git submodules with configured GitHub URLs. Their pinned initial commits have not been pushed, so a fresh checkout cannot initialize them yet. See [repository instructions](docs/development/repositories.md).
 
 For now, documentation can be checked by following the relative links and comparing the [traceability table](docs/requirements/traceability.md) to [SPEC.md](SPEC.md). Runtime startup is not available.

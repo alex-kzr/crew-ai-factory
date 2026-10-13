@@ -7,7 +7,7 @@ Source: [SPEC §§4–6, 9, 12–13](../../../SPEC.md)
 
 The umbrella owns docs, eventual deployment/config/scripts/integration tests and pins five independently managed repositories as Git submodules: `control-api`, `orchestration-worker`, `agent-runtime`, `web-ui`, `sample-app`. PostgreSQL, Redis and optional observability use infrastructure images/config rather than extra application repositories. This matches the logical ownership boundaries in SPEC §5 without splitting every dependency into a separate source repository.
 
-Each child currently has a local initial commit and a README only. No dependency manifest, CI or tests are added until executable code has a concrete contract. Local submodule URLs are temporary and non-portable; [publication steps](../../development/repositories.md) are required before a remote umbrella checkout works.
+Each child currently has a local initial commit and a README only. No dependency manifest, CI or tests are added until executable code has a concrete contract. The configured submodule URLs are the user-provided GitHub repositories; their local initial commits must be pushed before a remote umbrella checkout works. See [publication steps](../../development/repositories.md).
 
 ## Decision pending: execution location
 

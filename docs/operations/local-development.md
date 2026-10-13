@@ -16,4 +16,4 @@ Either Docker with narrow workspace/auth mounts and demonstrated CLI auth or a W
 
 ## Bootstrap today
 
-Local submodule checkouts already exist; on another machine `git submodule update --init --recursive` will fail until child remotes are published and `.gitmodules` is updated. The umbrella bootstrap command and Compose wrapper are pending implementation. See [repository publication](../development/repositories.md). No runtime command should be inferred from this design page.
+Local submodule checkouts exist and `.gitmodules` uses the actual GitHub URLs; a fresh checkout still cannot initialize them until their pinned commits are pushed. The umbrella bootstrap command and Compose wrapper are pending implementation. See [repository publication](../development/repositories.md). No runtime command should be inferred from this design page.
