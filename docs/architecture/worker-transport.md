@@ -86,5 +86,9 @@ core grant, real provider login retest or long-lived real CLI worker is
 claimed. An [offline host crash check]
 (../experiments/2026-10-13-offline-workspace-and-recovery.md) passed with a
 disposable Python child and fake in-memory queue state; it does not prove
-PostgreSQL crash recovery or real CLI containment. Neither check enables
-real CLI dispatch.
+PostgreSQL crash recovery or real CLI containment. A later, separately
+approved [PostgreSQL and HTTP crash/restart check]
+(../experiments/2026-10-13-postgres-http-crash-restart.md) verified real lease
+expiry, durable quarantine and no replay after API restart for one disposable
+Python child. Real CLI containment and provider login with the filtered child
+environment remain unverified. These checks do not enable real CLI dispatch.
