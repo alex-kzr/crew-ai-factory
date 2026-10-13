@@ -18,7 +18,7 @@ These names are **recommendations, not existing GitHub repositories or URLs**. C
 
 ## Publication sequence (after the user creates child remotes)
 
-1. Obtain exact remote URLs for the five newly created repositories. In each checked-out child, add its actual `origin` and push its initial `main` commit. Do not create guessed remotes.
+1. Obtain exact remote URLs for the five newly created repositories. In each checked-out child, inspect `git remote -v`; its cloned `origin` currently points to the local seed. After the exact new URL is supplied, replace that `origin` with `git remote set-url origin <actual-url>` and push its initial `main` commit. Do not create guessed remotes.
 2. In the umbrella, run `git submodule set-url repositories/<name> <actual-url>` for each child, then `git submodule sync --recursive`. Commit `.gitmodules` and any updated gitlinks.
 3. From a disposable fresh clone, run `git submodule update --init --recursive`; verify every pinned commit is reachable. Only then publish/update the umbrella remote.
 4. Implement `scripts/bootstrap.sh` to initialize submodules and check tools without printing secrets; test in a fresh checkout.
