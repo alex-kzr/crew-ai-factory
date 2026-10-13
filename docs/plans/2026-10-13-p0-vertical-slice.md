@@ -2,7 +2,7 @@
 
 Date: 2026-10-13. Source: [SPEC §§4–10, 14–16](../../SPEC.md). This plan starts implementation; passing its first milestone is not completion of SPEC P0 or system acceptance.
 
-## Milestone 1: deterministic, credential-free contract
+## Milestone 1: deterministic, credential-free contract — verified 2026-10-13
 
 Execution: [parallel: P0S-01, P0S-02, P0S-03], followed by [same-session: P0S-04].
 
@@ -11,7 +11,7 @@ Execution: [parallel: P0S-01, P0S-02, P0S-03], followed by [same-session: P0S-04
 - [P0S-03](tasks/P0S-03_orchestration-loop.md): synthetic plan → implementation → review → bounded correction → tests; baseline mode and, only if verified without paid model access, CrewAI Flow mode.
 - [P0S-04](tasks/P0S-04_integration.md): integrate pinned child commits, run shared contract/E2E checks, capture artifacts and compare intended versus observed behavior.
 
-**Done when:** a fresh checkout bootstraps submodules; synthetic run starts from a recorded fixture commit, emits traceable structured steps, exercises a negative review or failing test and bounded correction, executes deterministic tests, stores a final artifact, and the same fixture is runnable in the available modes. Findings and unavailable modes are documented honestly. No real CLI credentials are needed for this gate.
+**Done when:** a fresh checkout bootstraps submodules; synthetic run starts from a recorded fixture commit, emits traceable structured steps, exercises a negative review or failing test and bounded correction, executes deterministic tests, stores a final artifact, and the same fixture is runnable in the available modes. Findings and unavailable modes are documented honestly. No real CLI credentials are needed for this gate. This gate passed from a fresh recursive clone at umbrella commit `231d0a4`; see [evidence](../experiments/2026-10-13-synthetic-baseline.md).
 
 ## Milestone 2: actual CLI and core services
 

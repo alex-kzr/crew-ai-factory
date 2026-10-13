@@ -8,7 +8,7 @@ A user supplies a target repository and revision, constraints, and acceptance cr
 
 ## Initial MVP / P0
 
-One complete vertical slice: bootstrap the independent repos; verified local CLI paths; a CrewAI Flow performing plan → implementation → review → bounded correction → tests on a sample app; commit, log and artifact capture; a tested `core` Compose group. The current repository delivers only the documentation and Git scaffold portion of P0. It does **not** satisfy P0's runnable proof of concept.
+One complete vertical slice: bootstrap the independent repos; verified local CLI paths; a CrewAI Flow performing plan → implementation → review → bounded correction → tests on a sample app; commit, log and artifact capture; a tested `core` Compose group. The first synthetic contract slice now passes from a fresh checkout; it does not fulfill the real CLI, CrewAI Flow or Compose P0 proof of concept. See [experiment evidence](../experiments/2026-10-13-synthetic-baseline.md). It does **not** satisfy P0's runnable proof of concept.
 
 ## Subsequent phases
 

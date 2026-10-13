@@ -1,7 +1,7 @@
 # P0S-01 — Runtime contract
 
 ## Status
-In Progress
+Done
 
 ## Execution Metadata
 - Type: backend
@@ -23,3 +23,14 @@ Create an importable typed provider-neutral runtime package and synthetic adapte
 - AC-1: Synthetic execution emits deterministic structured result and events with correlation IDs.
 - AC-2: Status/cancellation and failure classifications have meaningful tests.
 - AC-3: No real CLI, credentials or runtime worktree is required.
+
+## Result
+
+Completed 2026-10-13 — outcome: **verified**.
+
+Verification commands:
+- `repositories/caf-agent-runtime -> uv run --offline --python 3.12 pytest -q` — exit 0, 21 passed.
+
+Evidence:
+- Pinned child commit `227e0cc0166fcf3c9bbdc8894ba483065a49836f`.
+- [Synthetic experiment report](../../experiments/2026-10-13-synthetic-baseline.md).

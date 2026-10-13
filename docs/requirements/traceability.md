@@ -15,4 +15,4 @@ This table maps each SPEC section to the development page that interprets it. [S
 | §§14–16 | Phases, deliverables, acceptance | [Scope](scope.md), [verification](../development/verification.md) |
 | §17 | Implementer instructions | [Scope](scope.md), [ADR 0001](../architecture/decisions/0001-repository-and-runtime.md) |
 
-**Current coverage:** documentation/scaffolds only. All runnable deliverables and system acceptance checks in §§15–16 are pending. See the separate checklist in [verification](../development/verification.md).
+**Current coverage:** documentation plus a tested synthetic runtime/workflow and sample fixture. Real CLI, CrewAI comparison, API/UI, Compose and persistence acceptance in §§15–16 remain pending. See [experiment evidence](../experiments/2026-10-13-synthetic-baseline.md) and [verification](../development/verification.md).

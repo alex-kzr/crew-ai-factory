@@ -1,6 +1,6 @@
 # Security, tests and acceptance
 
-Source: [SPEC §§9–12, 15–16](../../SPEC.md). All checks below are **future acceptance checks**; none are claimed to pass today.
+Source: [SPEC §§9–12, 15–16](../../SPEC.md). Checks below are target acceptance layers. A synthetic contract/worktree integration test has passed; real CLI, Compose, persistence, recovery and comparison checks remain pending.
 
 ## Security boundaries
 
@@ -20,4 +20,4 @@ Source: [SPEC §§9–12, 15–16](../../SPEC.md). All checks below are **future
 5. **Reliability:** concurrent tasks never share writable worktree; worker restart/recovery; unavailable Docker, Postgres, Redis or either CLI; orphan cleanup.
 6. **Experiment:** identical fixtures and base commits for Modes A/B/C, measured duration/quality/iterations/failure and separate API cost, with written recommendation.
 
-The complete acceptance list remains in [SPEC §16](../../SPEC.md); use its individual bullets as release gates. A fresh recursive checkout has been verified; core startup remains blocked until runnable services exist. The current documentation-only scaffold cannot satisfy these tests.
+The complete acceptance list remains in [SPEC §16](../../SPEC.md); use its individual bullets as release gates. A fresh recursive checkout has been verified; core startup remains blocked until runnable services exist. The current synthetic slice does not satisfy system acceptance.
