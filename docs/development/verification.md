@@ -1,6 +1,6 @@
 # Security, tests and acceptance
 
-Source: [SPEC sections 9-12 and 15-16](../../SPEC.md). Checks below are target acceptance layers. Synthetic contract/worktree and Flow parity tests, API route tests, separate Codex and Claude no-tools CLI smoke calls and static Compose configuration checks have passed. Code-changing CLI execution, container startup, live persistence, recovery and actual code-change comparison remain pending. See [follow-up evidence](../experiments/2026-10-13-flow-cli-and-api.md).
+Source: [SPEC sections 9-12 and 15-16](../../SPEC.md). Checks below are target acceptance layers. Synthetic contract/worktree and Flow parity tests, API route tests, separate Codex and Claude no-tools CLI smoke calls, and live API/PostgreSQL Compose readiness and task intake have passed. A queued Run remained readable after an API container restart. Code-changing CLI execution, worker recovery and actual code-change comparison remain pending. See [follow-up evidence](../experiments/2026-10-13-flow-cli-and-api.md).
 
 ## Security boundaries
 
@@ -20,4 +20,4 @@ Source: [SPEC sections 9-12 and 15-16](../../SPEC.md). Checks below are target a
 5. **Reliability:** concurrent tasks never share writable worktree; worker restart/recovery; unavailable Docker, Postgres, Redis or either CLI; orphan cleanup.
 6. **Experiment:** identical fixtures and base commits for Modes A/B/C, measured duration/quality/iterations/failure and separate API cost, with written recommendation.
 
-The complete acceptance list remains in [SPEC §16](../../SPEC.md); use its individual bullets as release gates. A fresh recursive checkout has been verified; core startup remains blocked until runnable services exist. The current synthetic slice does not satisfy system acceptance.
+The complete acceptance list remains in [SPEC §16](../../SPEC.md); use its individual bullets as release gates. A fresh recursive checkout and the provisional API/PostgreSQL slice have been verified. The complete SPEC `core` group and system acceptance remain open.

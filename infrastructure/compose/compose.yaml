@@ -31,7 +31,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    networks: [private]
+    networks: [private, edge]
     healthcheck:
       test: [CMD, .venv/bin/python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready', timeout=2).close()"]
       interval: 10s
@@ -47,3 +47,4 @@ volumes:
 networks:
   private:
     internal: true
+  edge: {}

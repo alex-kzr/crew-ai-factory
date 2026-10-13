@@ -7,7 +7,7 @@ Plan: [P0 synthetic vertical slice](plans/2026-10-13-p0-vertical-slice.md).
 - Connect queued API runs to an actual worker with durable claim/completion and tested restart behavior.
 
 ## To Do
-- Restore Docker Desktop availability, then start and health-test the provisional `caf` API/PostgreSQL Compose slice; add the real worker/runtime boundary afterward. The approved startup attempt was blocked by the Docker daemon before readiness checks.
+- Add the real worker/runtime boundary to the now-tested API/PostgreSQL Compose slice; verify claim, cancellation and recovery.
 - Compare CrewAI Modes A/B with the baseline on identical fixtures once model configuration is verified.
 
 ## Done
@@ -18,4 +18,4 @@ Plan: [P0 synthetic vertical slice](plans/2026-10-13-p0-vertical-slice.md).
 - Publish and verify six initial repositories; fresh recursive clone succeeded on 2026-10-13.
 - Implement and test host CLI adapters (34 tests; separate no-tools Claude and explicit-path Codex smokes passed).
 - Implement CrewAI Flow Mode B over the shared synthetic workflow (17 tests, three parity scenarios).
-- Implement authenticated API task intake and a provisional API/PostgreSQL Compose definition (tests/build/static configuration passed; live startup pending).
+- Implement authenticated API task intake and a provisional API/PostgreSQL Compose slice; live startup, readiness, bearer auth, idempotency and API-restart persistence passed.

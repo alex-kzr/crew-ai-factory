@@ -8,7 +8,7 @@ A user supplies a target repository and revision, constraints, and acceptance cr
 
 ## Initial MVP / P0
 
-One complete vertical slice: bootstrap the independent repos; verified local CLI paths; a CrewAI Flow performing plan, implementation, review, bounded correction and tests on a sample app; commit, log and artifact capture; a tested `core` Compose group. The synthetic contract and CrewAI Flow paths run from a fresh checkout, and both CLIs passed separate no-tools host smokes. The Flow has not orchestrated real CLI code changes; Compose startup was attempted but could not reach readiness. See the [synthetic](../experiments/2026-10-13-synthetic-baseline.md) and [follow-up](../experiments/2026-10-13-flow-cli-and-api.md) evidence. P0's runnable proof of concept remains open.
+One complete vertical slice: bootstrap the independent repos; verified local CLI paths; a CrewAI Flow performing plan, implementation, review, bounded correction and tests on a sample app; commit, log and artifact capture; a tested `core` Compose group. The synthetic contract and CrewAI Flow paths run from a fresh checkout, and both CLIs passed separate no-tools host smokes. The provisional API/PostgreSQL Compose slice reached readiness and accepted a live task. The Flow has not orchestrated real CLI code changes, and the complete SPEC `core` group is not implemented. See the [synthetic](../experiments/2026-10-13-synthetic-baseline.md) and [follow-up](../experiments/2026-10-13-flow-cli-and-api.md) evidence. P0's runnable proof of concept remains open.
 
 ## Subsequent phases
 
