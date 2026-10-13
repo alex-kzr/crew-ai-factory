@@ -1,7 +1,8 @@
-# Offline UI preview and remaining host CLI gates
+# UI inspection and remaining host CLI gates
 
 Source: [SPEC sections 5, 9-12 and 14-16](../../SPEC.md). Status: **offline
-UI preview implemented; connected UI and real CLI recovery open**.
+preview and optional host-only one-Run read implemented; live integration and
+real CLI recovery open**.
 
 ## P0 UI preview
 
@@ -14,13 +15,18 @@ timestamps and only known artifact gate/review fields. A `failed` Run with
 automatically retried. Missing fields are shown as unavailable. React renders
 imported strings as text; arbitrary artifact content is not dumped.
 
-The current control API has authenticated create, one-Run read and cancel
-routes, but no browser session, same-origin proxy, list of tasks, typed
-event/review/gate endpoints, service status or live stream. A connected UI
-needs a server-side authentication boundary and additional API contracts.
-Putting `CAF_API_TOKEN` into a browser bundle, URL or browser storage is not
-an acceptable shortcut. The current preview creates no real Task or Run and
-does not demonstrate P4 acceptance.
+An optional Node host server now exposes status, typed results, and a bounded
+lease journal for exactly one configured Run. It keeps an existing API bearer
+server-side, checks Host, binds to loopback, does not forward browser
+credentials, and strips the opaque artifact from the status response. The
+results projection is **not** secret redaction of free text; only view Runs
+appropriate for local display. Loopback access does not authenticate a human
+user. The server does not submit or cancel Runs, and its three separate reads
+can race during a transition. UI and server mock tests do not prove a live
+PostgreSQL API integration. See the [inspection contract](../architecture/run-inspection-contract.md).
+
+The API still lacks a task list, service status and full workflow event
+stream. This preview does not demonstrate P4 acceptance.
 
 ## Minimal filtered-environment CLI check (planned, not executed here)
 

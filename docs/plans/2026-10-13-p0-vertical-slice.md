@@ -29,13 +29,13 @@ Execution: same-session after Milestone 1. Verify Codex/Claude non-interactive f
 6. [ ] Extend and test the complete `core` group and optional-group status/log commands; keep unrelated containers and shared dependencies safe. Redis remains a design decision because PostgreSQL currently holds queued Runs.
 7. [ ] Persist the remaining SPEC events, checkpoints, findings, gate results and metrics, then run comparable A/B/C experiments on identical inputs. Verify Mode A's manager backend and separate API-model cost.
 
-An [offline UI preview](../development/ui-preview-and-cli-gates.md) now covers
-task-body validation and local inspection of Run status, available gate/review
-fields and quarantine. It has no authenticated browser-to-API path, live
-events or service controls; these remain part of the SPEC P4/UI work rather
-than a completed P0 service. The same document records the minimal planned
-filtered-environment CLI check; provider execution and real CLI recovery
-remain open.
+A [UI inspection workbench](../development/ui-preview-and-cli-gates.md) covers
+task-body validation and local Run inspection. An optional host-only server
+uses an existing API bearer to read one configured Run's status, typed results
+and lease journal. This is mock-tested, not live-verified against PostgreSQL,
+and offers no human identity auth, full events or service controls. The
+[consolidated live gates](p0-live-gates.md) include filtered-environment CLI
+checks, real provider execution and real CLI recovery; these remain open.
 
 ## Milestone 3: comparable experiment
 
