@@ -4,10 +4,10 @@ Plan: [P0 synthetic vertical slice](plans/2026-10-13-p0-vertical-slice.md).
 
 ## In Progress
 - Verify real isolated Codex/Claude code changes and cross-provider review using the now-explicit CLI executable selection.
-- Connect queued API runs to an actual worker with durable claim/completion and tested restart behavior.
+- Connect queued API runs to a bounded production worker and real runtime, with cancellation and tested restart behavior.
 
 ## To Do
-- Add the real worker/runtime boundary to the now-tested API/PostgreSQL Compose slice; verify claim, cancellation and recovery.
+- Add the production worker/runtime boundary to the API/PostgreSQL Compose slice; verify cancellation, lease heartbeat and recovery.
 - Compare CrewAI Modes A/B with the baseline on identical fixtures once model configuration is verified.
 
 ## Done
@@ -19,3 +19,5 @@ Plan: [P0 synthetic vertical slice](plans/2026-10-13-p0-vertical-slice.md).
 - Implement and test host CLI adapters (34 tests; separate no-tools Claude and explicit-path Codex smokes passed).
 - Implement CrewAI Flow Mode B over the shared synthetic workflow (17 tests, three parity scenarios).
 - Implement authenticated API task intake and a provisional API/PostgreSQL Compose slice; live startup, readiness, bearer auth, idempotency and API-restart persistence passed.
+- Implement transactional PostgreSQL queue claim, lease renewal and owner-guarded completion; isolated live database tests passed.
+- Prove one queue-to-synthetic-runtime handoff in a dedicated test database; persist a labeled JSON artifact without starting a CLI or draining the shared CAF queue.

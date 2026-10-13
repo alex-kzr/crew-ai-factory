@@ -1,6 +1,6 @@
 # Data and interaction contracts
 
-Source: [SPEC sections 7-11](../../SPEC.md). Most of this page remains a **target contract outline**. The [control API P0 schema and worker handoff](../../repositories/caf-control-api/docs/worker-contract.md) implement only Task and Run intake/status; they do not fulfill the full entity, transport, checkpoint or audit requirements below.
+Source: [SPEC sections 7-11](../../SPEC.md). Most of this page remains a **target contract outline**. The [control API P0 schema and worker handoff](../../repositories/caf-control-api/docs/worker-contract.md) implement Task and Run intake/status plus conditional queue claim, lease renewal and completion. The isolated [worker proof](../../repositories/caf-orchestration-worker/README.md#explicit-queue-to-synthetic-proof) exercises these operations with a synthetic runtime in a dedicated test database. They do not fulfill the full entity, transport, checkpoint or audit requirements below.
 
 ## Stable identity and durable records
 
@@ -16,7 +16,7 @@ Minimum entities: `Project`, `Repository`, `AgentProfile`, `Task`, `TaskDependen
 | Artifact, Event | Artifact location/checksum, ordered timestamped state and CLI events with correlation ID |
 | ReviewFinding, QualityGateResult | Diff location, finding/verdict, command, exit status and evidence |
 
-**Proposed interaction sequence:** API validates and persists a run request, coordination wakes worker, worker issues a typed runtime task, runtime emits incremental events and returns a terminal result, worker integrates and gates the code, then records final artifacts. The implemented P0 API exposes authenticated `POST /v1/tasks` and `GET /v1/runs/{id}` and atomically stores Task plus queued Run. The [worker claim/completion contract](../../repositories/caf-control-api/docs/worker-contract.md) is proposed but unimplemented; event delivery and ordering guarantees are **decision pending**.
+**Proposed interaction sequence:** API validates and persists a run request, coordination wakes worker, worker issues a typed runtime task, runtime emits incremental events and returns a terminal result, worker integrates and gates the code, then records final artifacts. The implemented P0 API exposes authenticated `POST /v1/tasks` and `GET /v1/runs/{id}` and atomically stores Task plus queued Run. The [worker claim/completion contract](../../repositories/caf-control-api/docs/worker-contract.md) implements transactional claim and conditional completion; a test-only worker function exercises the handoff. There is no polling daemon, automatic wake-up, expired-lease reclamation or production runtime integration. Event delivery and ordering guarantees are **decision pending**.
 
 ## Runtime adapter boundary
 

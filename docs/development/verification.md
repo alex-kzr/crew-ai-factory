@@ -1,6 +1,6 @@
 # Security, tests and acceptance
 
-Source: [SPEC sections 9-12 and 15-16](../../SPEC.md). Checks below are target acceptance layers. Synthetic contract/worktree and Flow parity tests, API route tests, separate Codex and Claude no-tools CLI smoke calls, and live API/PostgreSQL Compose readiness and task intake have passed. A queued Run remained readable after an API container restart. Code-changing CLI execution, worker recovery and actual code-change comparison remain pending. See [follow-up evidence](../experiments/2026-10-13-flow-cli-and-api.md).
+Source: [SPEC sections 9-12 and 15-16](../../SPEC.md). Checks below are target acceptance layers. Synthetic contract/worktree and Flow parity tests, API route tests, separate Codex and Claude no-tools CLI smoke calls, and live API/PostgreSQL Compose readiness and task intake have passed. A queued Run remained readable after an API container restart. Queue claim/completion and one synthetic worker bridge passed isolated live PostgreSQL tests. Code-changing CLI execution, a worker daemon, recovery and actual code-change comparison remain pending. See [follow-up evidence](../experiments/2026-10-13-flow-cli-and-api.md).
 
 ## Security boundaries
 
