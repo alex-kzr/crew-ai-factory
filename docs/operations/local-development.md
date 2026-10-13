@@ -6,9 +6,9 @@ Source: [SPEC §§5-6, 12, 15-16](../../SPEC.md). Target: Windows 11 with WSL2 a
 
 The Compose file at [`infrastructure/compose/compose.yaml`](../../infrastructure/compose/compose.yaml) defines one project named `caf` and one `core` profile containing **PostgreSQL and control-api only**. The API image uses the child repository's Dockerfile; its startup command migrates the P0 schema and starts Uvicorn. PostgreSQL has no published port. The API publishes container port 8000 on host `127.0.0.1:8123` by default; set `CAF_API_PORT` to choose another host port. Both services share the internal `caf_private` network; only the API also joins `caf_edge` so its loopback host port works. Both have readiness health checks. Database data persists in the Compose-managed `caf_postgres_data` volume. `down core` stops the two containers without removing data.
 
-**Verification:** `docker compose config --quiet` and the wrapper's Bash syntax/help/config commands passed on 2026-10-13. After Docker Desktop recovered, `up core` built the API image and both containers reached healthy. Host loopback liveness/readiness and live PostgreSQL task intake passed; see [measured results](#live-core-check-after-docker-recovery). The `core` profile is a provisional API/database slice, **not** the complete SPEC core group. The worker has no daemon; agent-runtime has passed host no-tools CLI invocations but has no service/Compose integration. Redis is not used by this slice. `ui`, `observability`, `dev` and `all` deliberately return unavailable from the wrapper rather than starting a partial stack.
+**Verification:** `docker compose config --quiet` and the wrapper's Bash syntax/help/config commands passed on 2026-10-13. After Docker Desktop recovered, `up core` built the API image and both containers reached healthy. Host loopback liveness/readiness and live PostgreSQL task intake passed; see [measured results](#live-core-check-after-docker-recovery). The `core` profile is a provisional API/database slice, **not** the complete SPEC core group. The persistent daemon exists only in the separate synthetic test profile; core has no running worker. Redis is not used by this slice. `ui`, `observability`, `dev` and `all` deliberately return unavailable from the wrapper rather than starting a partial stack.
 
-Two opt-in experiment profiles are separate from `core`: `p0-test` builds a
+Opt-in experiment profiles are separate from `core`: `p0-test` builds a
 one-shot synthetic worker that connects to a manually created
 `caf_queue_test_p0_20261013_1` database in CAF PostgreSQL; `p0-code-test`
 starts a separate PostgreSQL service on `127.0.0.1:55433` for a one-shot host
@@ -17,8 +17,13 @@ refuses a connected database whose name does not start with `caf_queue_test_`.
 The host code worker uses the existing user's CLI profiles and a worktree
 outside the umbrella submodules; its CLI credentials are never mounted into
 Docker. Its test PostgreSQL credentials are supplied from the local shell,
-not from a repository file. Keep these profiles out of normal startup. After
-exporting the run artifact, stop only `caf-p0-test-postgres-1`; its dedicated
+not from a repository file. `p0-test-daemon` starts a persistent polling
+synthetic worker and the same isolated test PostgreSQL service. It has no CLI
+authentication or connection to the core database. The profile dependency is
+valid when enabled alone (`docker compose --profile p0-test-daemon config
+--services` lists both services). Keep these profiles out of normal startup.
+After exporting the run artifact, stop the test daemon and
+`caf-p0-test-postgres-1`; its dedicated
 `caf_p0_test_data` volume preserves the journal for review. See the
 [measured experiment](../experiments/2026-10-13-p0-recovery-and-code.md).
 

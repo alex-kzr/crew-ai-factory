@@ -26,6 +26,7 @@ services:
     environment:
       CAF_DATABASE_URL: postgresql://caf:${CAF_POSTGRES_PASSWORD:-}@postgres:5432/caf
       CAF_API_TOKEN: ${CAF_API_TOKEN:-}
+      CAF_WORKER_TOKEN: ${CAF_WORKER_TOKEN:-}
     ports:
       - 127.0.0.1:${CAF_API_PORT:-8123}:8000
     depends_on:
@@ -54,8 +55,28 @@ services:
     restart: "no"
     mem_limit: 512m
 
+  synthetic-worker-daemon:
+    profiles: [p0-test-daemon]
+    build:
+      context: ../../repositories/caf-orchestration-worker
+    command: [.venv/bin/python, -m, caf_orchestration_worker.synthetic_daemon]
+    environment:
+      CAF_QUEUE_TEST_DATABASE_URL: postgresql://caf_test:${CAF_P0_TEST_PASSWORD:-}@p0-test-postgres:5432/caf_queue_test_code
+    depends_on:
+      p0-test-postgres:
+        condition: service_healthy
+    networks: [edge]
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, .venv/bin/python, -c, "import os,time; p='/tmp/caf-synthetic-worker-heartbeat'; assert os.path.isfile(p) and time.time()-os.path.getmtime(p)<15"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 20s
+    mem_limit: 512m
+
   p0-test-postgres:
-    profiles: [p0-code-test]
+    profiles: [p0-code-test, p0-test-daemon]
     image: postgres:16-alpine
     environment:
       POSTGRES_DB: caf_queue_test_code
