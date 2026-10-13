@@ -1,0 +1,49 @@
+name: caf
+
+services:
+  postgres:
+    profiles: [core]
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: caf
+      POSTGRES_USER: caf
+      POSTGRES_PASSWORD: ${CAF_POSTGRES_PASSWORD:-}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks: [private]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U caf -d caf"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+    mem_limit: 512m
+
+  control-api:
+    profiles: [core]
+    build:
+      context: ../../repositories/caf-control-api
+    environment:
+      CAF_DATABASE_URL: postgresql://caf:${CAF_POSTGRES_PASSWORD:-}@postgres:5432/caf
+      CAF_API_TOKEN: ${CAF_API_TOKEN:-}
+    ports:
+      - 127.0.0.1:${CAF_API_PORT:-8123}:8000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [private]
+    healthcheck:
+      test: [CMD, .venv/bin/python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready', timeout=2).close()"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+      start_period: 15s
+    restart: unless-stopped
+    mem_limit: 512m
+
+volumes:
+  postgres_data:
+
+networks:
+  private:
+    internal: true

@@ -2,7 +2,7 @@
 
 CAF is an independent experiment in orchestrating Codex CLI and Claude Code as external coding agents with CrewAI. Its question is whether CrewAI adds measurable value over an equivalent Python `asyncio` workflow.
 
-**Status:** first synthetic P0 slice verified: a provider-neutral in-process runtime contract, sample benchmark fixture, asyncio workflow, and external-worktree integration test. Real Codex/Claude adapters, CrewAI modes, API/UI, Compose stack, persistence and benchmark verdict remain pending. [SPEC.md](SPEC.md) is the authoritative source for the full target and acceptance criteria.
+**Status:** first synthetic P0 slice verified: a provider-neutral in-process runtime contract, sample benchmark fixture, asyncio workflow, and external-worktree integration test. A provisional Compose core profile now defines the API and PostgreSQL, with static configuration checks only. Real Codex/Claude adapters, a worker daemon, UI, full core startup, recovery and benchmark verdict remain pending. [SPEC.md](SPEC.md) is the authoritative source for the full target and acceptance criteria.
 
 ## Navigate
 
@@ -17,4 +17,4 @@ CAF is an independent experiment in orchestrating Codex CLI and Claude Code as e
 
 The `repositories/` entries are independently versioned Git submodules with published initial commits. A fresh recursive clone succeeds. See [repository instructions](docs/development/repositories.md) and run `bash scripts/bootstrap.sh` in an existing checkout.
 
-Run `python -m unittest discover -s tests/integration -p test_synthetic_fixture.py -v` from an initialized checkout to verify the synthetic workflow. Review the [experiment evidence](docs/experiments/2026-10-13-synthetic-baseline.md) and [traceability table](docs/requirements/traceability.md). Runtime service startup is not yet available; see the [P0 implementation plan](docs/plans/2026-10-13-p0-vertical-slice.md).
+Run `python -m unittest discover -s tests/integration -p test_synthetic_fixture.py -v` from an initialized checkout to verify the synthetic workflow. Review the [experiment evidence](docs/experiments/2026-10-13-synthetic-baseline.md) and [traceability table](docs/requirements/traceability.md). The [service wrapper](scripts/services.sh) covers the current API/PostgreSQL slice; its containers have not been started or health-tested. See [local operations](docs/operations/local-development.md) and the [P0 implementation plan](docs/plans/2026-10-13-p0-vertical-slice.md).
