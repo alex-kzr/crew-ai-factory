@@ -28,12 +28,15 @@ PostgreSQL remains the authority for owner, live lease, cancel request,
 attempt and transactional claim/completion/quarantine journal. No HTTP
 response grants a command or CLI permission.
 
-`workspace_id` is an explicit Task label checked before claim. It does not
-prove which host directory a worker opened: the worker must map that label to
-an allowed path and verify its checkout. The real-code fixture accepts only
-`caf-sample-fixture-v1` for HTTP, a fixed sample base and source file. The
-one-shot synthetic HTTP entrypoint accepts only `caf-synthetic-v1`. There is
-no wildcard grant or grant for the shared `caf` database.
+`workspace_id` is an explicit Task label checked before claim. The one-shot
+host entrypoints now map exact IDs to the checked `caf-sample-app` submodule
+under `CAF_UMBRELLA_ROOT`, rejecting unknown IDs and redirected checkouts.
+The real-code fixture accepts only `caf-sample-fixture-v1` for HTTP, a fixed
+sample base and source file. It creates a private worktree directory under a
+checked host temporary root for each invocation. The synthetic HTTP entrypoint
+accepts only `caf-synthetic-v1`. There is no wildcard grant or grant for the
+shared `caf` database. The one-Run grant cannot read a different source Run;
+the HTTP fixture explicitly blocks `CAF_REVIEW_SOURCE_RUN` continuation.
 
 The current real-code host fixture additionally requires a connected
 `caf_queue_test_*` database, exact sample repository, base revision and task
@@ -56,6 +59,8 @@ excluded. Provider login has not been retested since this environment change.
 - Expired running work enters `failed/orphan_unverified`; there is no automatic
   model replay. Unverified process-tree cleanup propagates and preserves the
   worktree for investigation.
+- A partial Git worktree-add failure may leave a private directory for manual
+  inspection; cleanup does not recursively delete an unverified worktree.
 - The API routes do not start CLIs; the live core has no worker token and no
   always-on real-CLI worker.
 - Expiry rejects new requests. Revocation means removing or replacing the
@@ -78,4 +83,8 @@ then passed over a real loopback socket for one isolated Run, including
 foreign-Run denial and revocation. Its ephemeral token and processes were
 removed. Core Compose does not pass `CAF_WORKER_TOKEN` through and no live
 core grant, real provider login retest or long-lived real CLI worker is
-claimed. This check does not enable real CLI dispatch.
+claimed. An [offline host crash check]
+(../experiments/2026-10-13-offline-workspace-and-recovery.md) passed with a
+disposable Python child and fake in-memory queue state; it does not prove
+PostgreSQL crash recovery or real CLI containment. Neither check enables
+real CLI dispatch.

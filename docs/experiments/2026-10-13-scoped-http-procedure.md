@@ -57,8 +57,9 @@ read its token. This limitation is part of the approval decision.
 4. Start one host process running
    `python -m caf_orchestration_worker.p0_synthetic_http` with only
    `CAF_WORKER_API_URL=http://127.0.0.1:18123`, the same temporary worker
-   bearer, `CAF_WORKER_ID`, and `CAF_SYNTHETIC_WORKSPACE` pointing at the
-   existing sample checkout. It claims once and exits. Do not start the
+   bearer, `CAF_WORKER_ID`, and `CAF_UMBRELLA_ROOT` pointing at the
+   CAF umbrella checkout. The worker maps `caf-synthetic-v1` to the
+   checked sample submodule. It claims once and exits. Do not start the
    persistent daemon or any real CLI worker.
 5. Check the scoped Run's terminal artifact and claimed/completed journal
    entries. Verify that the unrelated Run, if included as a negative control,
