@@ -3,8 +3,8 @@
 Plan: [P0 synthetic vertical slice](plans/2026-10-13-p0-vertical-slice.md).
 
 ## In Progress
-- Preserve and verify a complete queued code-change artifact with a structured cross-provider review and commit from an isolated worktree.
-- Resolve host-crash and breakaway-process isolation, then connect queued API runs to a bounded host worker and real runtime with tested restart behavior. Windows Job Object orphan cleanup passed local live tests.
+- Connect an always-on worker and host runtime to the shared API queue through a tested least-privilege transport, with readiness and restart behavior.
+- Complete one durable CrewAI Flow with negative review, correction and retest using real CLI adapters.
 
 ## To Do
 - Add the production worker/runtime boundary to the API/PostgreSQL Compose slice; verify cancellation, lease heartbeat and recovery.
@@ -23,3 +23,6 @@ Plan: [P0 synthetic vertical slice](plans/2026-10-13-p0-vertical-slice.md).
 - Prove one queue-to-synthetic-runtime handoff in a dedicated test database; persist a labeled JSON artifact without starting a CLI or draining the shared CAF queue.
 - Add guarded API cancellation and expired-lease quarantine; test claim/ACK/cancel/idempotency in isolated PostgreSQL and worker unit tests.
 - Prove one bounded Codex sample code edit in an external worktree with both acceptance suites passing, and a separate Claude no-tools review of the actual diff returning `approved=true`. Neither experiment wrote to the CAF queue.
+- Verify disposable Windows runtime-host exit, contained breakaway attempt and durable PostgreSQL claim/quarantine without model replay after test worker exit.
+- Run a one-shot Compose worker against an isolated PostgreSQL queue and synthetic runtime; a second poll found no work.
+- Preserve a queued Codex sample diff, deterministic gates, Claude approval and local commit through a source-linked continuation Run in a separate test database.

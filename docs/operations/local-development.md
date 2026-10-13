@@ -8,6 +8,20 @@ The Compose file at [`infrastructure/compose/compose.yaml`](../../infrastructure
 
 **Verification:** `docker compose config --quiet` and the wrapper's Bash syntax/help/config commands passed on 2026-10-13. After Docker Desktop recovered, `up core` built the API image and both containers reached healthy. Host loopback liveness/readiness and live PostgreSQL task intake passed; see [measured results](#live-core-check-after-docker-recovery). The `core` profile is a provisional API/database slice, **not** the complete SPEC core group. The worker has no daemon; agent-runtime has passed host no-tools CLI invocations but has no service/Compose integration. Redis is not used by this slice. `ui`, `observability`, `dev` and `all` deliberately return unavailable from the wrapper rather than starting a partial stack.
 
+Two opt-in experiment profiles are separate from `core`: `p0-test` builds a
+one-shot synthetic worker that connects to a manually created
+`caf_queue_test_p0_20261013_1` database in CAF PostgreSQL; `p0-code-test`
+starts a separate PostgreSQL service on `127.0.0.1:55433` for a one-shot host
+CLI worker. Neither is started by `services.sh up core`. The synthetic worker
+refuses a connected database whose name does not start with `caf_queue_test_`.
+The host code worker uses the existing user's CLI profiles and a worktree
+outside the umbrella submodules; its CLI credentials are never mounted into
+Docker. Its test PostgreSQL credentials are supplied from the local shell,
+not from a repository file. Keep these profiles out of normal startup. After
+exporting the run artifact, stop only `caf-p0-test-postgres-1`; its dedicated
+`caf_p0_test_data` volume preserves the journal for review. See the
+[measured experiment](../experiments/2026-10-13-p0-recovery-and-code.md).
+
 ## Credentials and first startup
 
 Use an initialized recursive checkout. Supply credentials in your local shell environment; never put them in Git. `CAF_API_TOKEN` needs at least 32 characters. `CAF_POSTGRES_PASSWORD` needs at least 16 URL-safe characters from letters, digits, `.`, `_`, `~`, `-`; this restriction keeps the generated PostgreSQL URL unambiguous. **Keep the same PostgreSQL password across later `up core` calls for an existing data volume**: setting a new environment value does not change the password inside an initialized database. Store it in a user-controlled secret store outside the repository; do not paste real values into tickets or logs. The initial test session did not retain a reusable credential file. Example PowerShell setup for a new, empty volume:

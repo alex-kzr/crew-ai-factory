@@ -41,8 +41,42 @@ services:
     restart: unless-stopped
     mem_limit: 512m
 
+  synthetic-worker:
+    profiles: [p0-test]
+    build:
+      context: ../../repositories/caf-orchestration-worker
+    environment:
+      CAF_QUEUE_TEST_DATABASE_URL: postgresql://caf:${CAF_POSTGRES_PASSWORD:-}@postgres:5432/caf_queue_test_p0_20261013_1
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [private]
+    restart: "no"
+    mem_limit: 512m
+
+  p0-test-postgres:
+    profiles: [p0-code-test]
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: caf_queue_test_code
+      POSTGRES_USER: caf_test
+      POSTGRES_PASSWORD: ${CAF_P0_TEST_PASSWORD:-}
+    ports:
+      - 127.0.0.1:${CAF_P0_TEST_PORT:-55433}:5432
+    volumes:
+      - p0_test_data:/var/lib/postgresql/data
+    networks: [edge]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U caf_test -d caf_queue_test_code"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    restart: "no"
+    mem_limit: 512m
+
 volumes:
   postgres_data:
+  p0_test_data:
 
 networks:
   private:
