@@ -1,6 +1,8 @@
 # Proposed one-Run synthetic HTTP check
 
-Status: **procedure only; no worker token created, no access enabled**.
+Status: **executed once on 2026-10-13 with explicit approval; temporary
+tokens removed and processes stopped**. The steps below remain the procedure
+for a separately approved repeat.
 Source: [SPEC sections 5, 9-12 and 16](../../SPEC.md) and the
 [worker transport boundary](../architecture/worker-transport.md).
 
@@ -66,7 +68,28 @@ read its token. This limitation is part of the approval decision.
    container and retain the volume for review. The grant also expires on its
    own; stopping the API immediately revokes it.
 
-The check will establish a real loopback HTTP exchange and exact SQL claim
-scope with synthetic execution. It will not validate provider login, full
-real-CLI recovery or unattended `core` worker startup. A separate decision
-and fresh review are required before any real CLI auto-dispatch.
+## Measured result, 2026-10-13
+
+The one-shot host API and synthetic HTTP worker ran against the isolated
+`caf_queue_test_code` database. The test Run was
+`333cbc75-c7fe-48cd-a95f-5e2c3b270f9b` (Task
+`57cb55cd-7824-4f6f-ad06-365d0e4b9041`). It ended `succeeded` at
+attempt 1 with `execution_kind=bounded-synthetic-worker` and journal events
+`claimed,completed`. The existing unrelated Run
+`1a6b53f5-941f-41c9-9dce-8112df78b720` remained `succeeded` and could
+not be read or renewed through the scoped worker routes (404 in both cases).
+A different owner received 403; the intake API token received 401 at a worker
+route. The shared `caf` database had zero Runs.
+
+After stopping the scoped API, it was briefly restarted **without** a worker
+grant. The old worker token then received 503. Both temporary API instances
+and the one-shot worker exited; host port `18123` had zero listeners. Only
+the pre-existing core API and PostgreSQL remained running. The isolated test
+PostgreSQL container was stopped and its volume retained. Neither temporary
+bearer value was printed or written to a file. The worker entrypoint uses
+`SyntheticRuntime` and contains no model CLI invocation.
+
+This proves a real loopback HTTP exchange and exact SQL claim scope for one
+synthetic Run. It does not validate provider login under the new filtered
+environment, full real-CLI recovery or unattended `core` worker startup. A
+separate decision and fresh review are required before real CLI auto-dispatch.

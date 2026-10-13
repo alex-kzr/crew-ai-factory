@@ -71,9 +71,11 @@ artifact bounds. An opt-in in-process API test used separate
 Run refusal, wrong workspace refusal, exact claim, renewal, completion and
 journal readback. Worker tests verified loopback/proxy/redirect handling and
 credential-free errors. A native child-process test verified that dummy
-worker/model tokens did not reach a launched process. No live HTTP socket
-test, real provider login retest, or long-lived real CLI worker is claimed.
-No actual worker token has been created or installed. Core Compose no longer
-passes `CAF_WORKER_TOKEN` through. A [temporary synthetic HTTP procedure]
-(../experiments/2026-10-13-scoped-http-procedure.md) defines the next consent
-gate; it does not enable real CLI dispatch.
+worker/model tokens did not reach a launched process. With explicit approval,
+a [temporary synthetic HTTP check]
+(../experiments/2026-10-13-scoped-http-procedure.md#measured-result-2026-10-13)
+then passed over a real loopback socket for one isolated Run, including
+foreign-Run denial and revocation. Its ephemeral token and processes were
+removed. Core Compose does not pass `CAF_WORKER_TOKEN` through and no live
+core grant, real provider login retest or long-lived real CLI worker is
+claimed. This check does not enable real CLI dispatch.
