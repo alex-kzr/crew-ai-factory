@@ -1,0 +1,23 @@
+# Security, tests and acceptance
+
+Source: [SPEC §§9–12, 15–16](../../SPEC.md). All checks below are **future acceptance checks**; none are claimed to pass today.
+
+## Security boundaries
+
+- Authenticate and authorize execution endpoints; bind local services privately by default.
+- No tokens, CLI auth, `.env`, generated worktrees or runtime logs in Git. Redact captured streams and keep credentials in a narrow local workflow.
+- Set explicit filesystem, network, process and secret access for untrusted code. Git worktrees isolate changes, not process behavior.
+- Set concurrency, retry, wall-time, CPU/memory and disk limits. No automatic elevated permissions.
+- Avoid Docker socket and broad home/auth mounts by default. Document any exception and its threat model.
+- Use argument-array subprocess calls with cwd and environment allowlist. Test cancellation and child cleanup, orphan reconciliation, idempotent starts and graceful shutdown.
+
+## Verification ladder
+
+1. **Contracts/unit:** validation, state transitions, DAG, adapter event parsing/redaction, failure classification, gate policy and retry limits.
+2. **Runtime integration:** real installed Codex/Claude non-interactive invocation on disposable sample repo, permissions, timeout, cancel/process tree, session resume only if supported, and missing CLI/auth failures.
+3. **Services:** Compose config/profile selection, readiness, dependency failure, group overlap/stop semantics and optional status/logs.
+4. **E2E:** task intake → dedicated worktree → coding commit → integrated review → negative finding or failing test → bounded rework → passing tests → persisted findings, timestamps, artifacts and traceable events.
+5. **Reliability:** concurrent tasks never share writable worktree; worker restart/recovery; unavailable Docker, Postgres, Redis or either CLI; orphan cleanup.
+6. **Experiment:** identical fixtures and base commits for Modes A/B/C, measured duration/quality/iterations/failure and separate API cost, with written recommendation.
+
+The complete acceptance list remains in [SPEC §16](../../SPEC.md); use its individual bullets as release gates. A fresh checkout bootstrap and core startup are blocked until child remotes and runnable services exist. The current documentation-only scaffold cannot satisfy these tests.

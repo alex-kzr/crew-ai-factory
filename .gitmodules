@@ -1,0 +1,15 @@
+[submodule "repositories/control-api"]
+	path = repositories/control-api
+	url = C:/Users/admin/Documents/Codex/2026-10-13/task-3/caf-seeds/control-api
+[submodule "repositories/orchestration-worker"]
+	path = repositories/orchestration-worker
+	url = C:/Users/admin/Documents/Codex/2026-10-13/task-3/caf-seeds/orchestration-worker
+[submodule "repositories/agent-runtime"]
+	path = repositories/agent-runtime
+	url = C:/Users/admin/Documents/Codex/2026-10-13/task-3/caf-seeds/agent-runtime
+[submodule "repositories/web-ui"]
+	path = repositories/web-ui
+	url = C:/Users/admin/Documents/Codex/2026-10-13/task-3/caf-seeds/web-ui
+[submodule "repositories/sample-app"]
+	path = repositories/sample-app
+	url = C:/Users/admin/Documents/Codex/2026-10-13/task-3/caf-seeds/sample-app
