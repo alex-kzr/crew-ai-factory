@@ -21,10 +21,10 @@ Source: [SPEC §§7, 10, 14–16](../../SPEC.md). This is an initial **synthetic
 
 The integration test observed the stage order `plan → implement → review(rejected) → correct → review(approved) → test(passed)`, one correction iteration, a matching base revision and correlation ID, a changed `orders.py`, and a passing real unittest acceptance gate after a deterministic fixture patch. It wrote and read a JSON artifact in a temporary directory. The worker's standalone `synthetic-demo` writes an artifact to an explicitly supplied path. No commit was created for the synthetic code change.
 
-## Mode status and limits
+## Mode status and limits at this initial check
 
 - Mode C: a sequential `asyncio` baseline with synthetic runtime is runnable. It does not perform real agent execution or Git integration by itself.
-- Mode B: CrewAI Flow pending; CrewAI was not installed in checked Python environments. No API/model configuration was selected.
+- Mode B: CrewAI Flow was pending at this initial check; CrewAI was not installed in the checked Python environments. A later [Flow and CLI experiment](2026-10-13-flow-cli-and-api.md) implemented and tested synthetic Mode B. No API/model configuration was selected for this initial check.
 - Mode A: Crew-as-Tool pending; manager LLM and cost requirements must be verified before a comparable run.
 
-No timing, code-quality or cost comparison across Modes A/B/C is possible from these checks. Next: verify real CLI command paths using existing profiles and a disposable worktree, then integrate the same fixture and gates into Flow and baseline modes before making a verdict.
+No timing, code-quality or cost comparison across Modes A/B/C was possible from these initial checks. The [follow-up experiment](2026-10-13-flow-cli-and-api.md) records later CLI path checks and synthetic Flow parity; it does not establish a benchmark verdict.

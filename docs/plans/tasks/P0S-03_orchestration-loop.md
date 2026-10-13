@@ -24,7 +24,7 @@ Run a bounded, observable synthetic plan, implementation, review, correction and
 - AC-2: A negative finding or failed gate triggers bounded correction and reevaluation.
 - AC-3: CrewAI mode is implemented and tested only if it can run without unapproved model access; otherwise report evidence and keep it pending.
 
-## Result
+## Result at the initial baseline milestone
 
 Completed 2026-10-13 — outcome: **verified**.
 
@@ -33,4 +33,4 @@ Verification commands:
 
 Evidence:
 - Pinned child commit `5b69965895af3bd171781d05c9a68fef6aa013c2`.
-- [Synthetic experiment report](../../experiments/2026-10-13-synthetic-baseline.md). CrewAI mode remains pending because the package was absent in checked environments.
+- [Synthetic experiment report](../../experiments/2026-10-13-synthetic-baseline.md). CrewAI mode was pending at this milestone because the package was absent in checked environments. The later [Flow experiment](../../experiments/2026-10-13-flow-cli-and-api.md) records the synthetic Mode B implementation and tests.

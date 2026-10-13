@@ -6,7 +6,7 @@ Source: [SPEC §§5-6, 12, 15-16](../../SPEC.md). Target: Windows 11 with WSL2 a
 
 The Compose file at [`infrastructure/compose/compose.yaml`](../../infrastructure/compose/compose.yaml) defines one project named `caf` and one `core` profile containing **PostgreSQL and control-api only**. The API image uses the child repository's Dockerfile; its startup command migrates the P0 schema and starts Uvicorn. PostgreSQL has no published port. The API publishes container port 8000 on host `127.0.0.1:8123` by default; set `CAF_API_PORT` to choose another host port. Both services have readiness health checks and share the private `caf` network. Database data persists in the Compose-managed `caf_postgres_data` volume. `down core` stops the two containers without removing data.
 
-**Verification:** `docker compose config --quiet` and the wrapper's Bash syntax/help/config commands passed on 2026-10-13. Containers have **not** been started by this change, so startup, health, migrations and Docker image builds are not yet verified. The `core` profile is a provisional API/database slice, **not** the complete SPEC core group. The worker has no daemon; agent-runtime has no verified CLI/host integration. Redis is not used by this slice. `ui`, `observability`, `dev` and `all` deliberately return unavailable from the wrapper rather than starting a partial stack.
+**Verification:** `docker compose config --quiet` and the wrapper's Bash syntax/help/config commands passed on 2026-10-13; the API child image built separately. An approved `up core` attempt was blocked when Docker Desktop returned `Docker Desktop is unable to start` before service readiness could be observed. Startup, health and migrations against live PostgreSQL are not verified. The `core` profile is a provisional API/database slice, **not** the complete SPEC core group. The worker has no daemon; agent-runtime has passed host no-tools CLI invocations but has no service/Compose integration. Redis is not used by this slice. `ui`, `observability`, `dev` and `all` deliberately return unavailable from the wrapper rather than starting a partial stack.
 
 ## Credentials and first startup
 
@@ -18,7 +18,7 @@ $env:CAF_POSTGRES_PASSWORD = [Convert]::ToHexString([Security.Cryptography.Rando
 $env:CAF_API_PORT = '8123'
 ```
 
-Run the wrapper from the umbrella root in WSL or Git Bash after the API Dockerfile and image build have been checked:
+Run the wrapper from the umbrella root in WSL or Git Bash after the API Dockerfile and image build have been checked. From Windows PowerShell on this host, call `C:\Program Files\Git\bin\bash.exe` explicitly; unqualified `bash` resolved to the WSL launcher and did not pass the temporary CAF environment to the wrapper during the 2026-10-13 attempt:
 
 ```sh
 bash scripts/services.sh config
@@ -38,3 +38,7 @@ The API health endpoints are `/health/live` and `/health/ready`; readiness check
 SPEC `core` ultimately includes orchestration-worker, runtime integration and essential stores. Add a worker only after a tested long-lived daemon and readiness contract exist. Add Redis only if the chosen coordination path uses it. [Compose profiles](https://docs.docker.com/compose/how-tos/profiles/) select containers, not lifecycle ownership: before enabling optional groups that share PostgreSQL, update `down core` to detect and preserve active dependents. Until then the wrapper rejects the optional groups. A host-executed runtime must be shown as a host process in status, never as a Docker container.
 
 Development overrides/hot reload, resource tuning, observed startup behavior, failure recovery and safe cleanup procedures remain pending. See [verification](../development/verification.md) and [the P0 plan](../plans/2026-10-13-p0-vertical-slice.md).
+
+## Startup blocker observed 2026-10-13
+
+Before the attempt, host port 8123 had no listener, `caf` had no listed containers, and Docker Engine 29.8.2 responded while unrelated Compose projects were present. The first wrapper call through Windows' unqualified `bash` failed credential validation before Docker because it invoked WSL Bash without the temporary variables. A subsequent call through the explicit Git Bash executable passed that preflight but Docker returned `Docker Desktop is unable to start`. Follow-up read-only `docker version`, `docker ps` and CAF `ps` returned the same daemon error; `com.docker.service` showed `Stopped`. No Docker restart or operation on other projects was attempted. The temporary random CAF credentials were deleted. Service creation and database readiness could not be determined or tested after the daemon became unavailable.

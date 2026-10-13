@@ -8,7 +8,7 @@ A user supplies a target repository and revision, constraints, and acceptance cr
 
 ## Initial MVP / P0
 
-One complete vertical slice: bootstrap the independent repos; verified local CLI paths; a CrewAI Flow performing plan → implementation → review → bounded correction → tests on a sample app; commit, log and artifact capture; a tested `core` Compose group. The first synthetic contract slice now passes from a fresh checkout; it does not fulfill the real CLI, CrewAI Flow or Compose P0 proof of concept. See [experiment evidence](../experiments/2026-10-13-synthetic-baseline.md). It does **not** satisfy P0's runnable proof of concept.
+One complete vertical slice: bootstrap the independent repos; verified local CLI paths; a CrewAI Flow performing plan, implementation, review, bounded correction and tests on a sample app; commit, log and artifact capture; a tested `core` Compose group. The synthetic contract and CrewAI Flow paths run from a fresh checkout, and both CLIs passed separate no-tools host smokes. The Flow has not orchestrated real CLI code changes; Compose startup was attempted but could not reach readiness. See the [synthetic](../experiments/2026-10-13-synthetic-baseline.md) and [follow-up](../experiments/2026-10-13-flow-cli-and-api.md) evidence. P0's runnable proof of concept remains open.
 
 ## Subsequent phases
 
@@ -21,7 +21,9 @@ One complete vertical slice: bootstrap the independent repos; verified local CLI
 
 Kubernetes, multi-tenancy, billing, enterprise IAM, replacement coding CLIs, mandatory API keys for CLI execution, Temporal, RAG/vector stores, and a broker beyond Redis absent evidence. Git worktrees are not a security boundary.
 
-## Next implementation slice
+## Implementation sequence and remaining gates
+
+Environment checks, the synthetic contract/fixture, host adapter no-tools smokes and a synthetic Flow have started this sequence. The remaining code-changing, service and comparative gates are tracked in the [P0 plan](../plans/2026-10-13-p0-vertical-slice.md).
 
 1. Record installed CrewAI, Codex, Claude, Git, Docker Compose and uv versions and authentication *availability* without exposing credentials.
 2. Decide and test the runtime location and least-privilege credential/workspace access (see [ADR 0001](../architecture/decisions/0001-repository-and-runtime.md)).

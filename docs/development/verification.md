@@ -1,6 +1,6 @@
 # Security, tests and acceptance
 
-Source: [SPEC sections 9-12 and 15-16](../../SPEC.md). Checks below are target acceptance layers. Synthetic contract/worktree and Flow parity tests, API route tests, one Claude no-tools CLI smoke call and static Compose configuration checks have passed. Codex execution, container startup, live persistence, recovery and actual code-change comparison remain pending. See [follow-up evidence](../experiments/2026-10-13-flow-cli-and-api.md).
+Source: [SPEC sections 9-12 and 15-16](../../SPEC.md). Checks below are target acceptance layers. Synthetic contract/worktree and Flow parity tests, API route tests, separate Codex and Claude no-tools CLI smoke calls and static Compose configuration checks have passed. Code-changing CLI execution, container startup, live persistence, recovery and actual code-change comparison remain pending. See [follow-up evidence](../experiments/2026-10-13-flow-cli-and-api.md).
 
 ## Security boundaries
 

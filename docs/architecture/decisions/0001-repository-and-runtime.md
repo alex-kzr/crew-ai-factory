@@ -15,7 +15,7 @@ The runtime must remain a separate contract, but its first process location is u
 
 ## Other open questions
 
-- Successful Codex execution with the existing profile; write-capable CLI paths, complete event/usage parsing and session resume.
+- Write-capable Codex/Claude task execution and review with the existing profiles; complete event/usage parsing and session resume. Separate no-tools calls have passed.
 - CrewAI version, manager LLM backend, API key/cost requirements in Mode A, and state recovery guarantees.
 - Queue/transport and exact API/event schemas; checkpoint and event ordering semantics.
 - Safe partial group stop behavior when services share stores.
