@@ -1,6 +1,6 @@
 # Data and interaction contracts
 
-Source: [SPEC §§7–11](../../SPEC.md). These are **proposed contract outlines**, not an implemented OpenAPI or database schema. Resolve field names, ownership, transport and versioning before code is published.
+Source: [SPEC sections 7-11](../../SPEC.md). Most of this page remains a **target contract outline**. The [control API P0 schema and worker handoff](../../repositories/caf-control-api/docs/worker-contract.md) implement only Task and Run intake/status; they do not fulfill the full entity, transport, checkpoint or audit requirements below.
 
 ## Stable identity and durable records
 
@@ -16,7 +16,7 @@ Minimum entities: `Project`, `Repository`, `AgentProfile`, `Task`, `TaskDependen
 | Artifact, Event | Artifact location/checksum, ordered timestamped state and CLI events with correlation ID |
 | ReviewFinding, QualityGateResult | Diff location, finding/verdict, command, exit status and evidence |
 
-**Proposed interaction sequence:** API validates and persists a run request, coordination wakes worker, worker issues a typed runtime task, runtime emits incremental events and returns a terminal result, worker integrates and gates the code, then records final artifacts. Define idempotency keys for task start and event delivery. Exact endpoint paths, message encoding and event ordering guarantees are **decision pending**.
+**Proposed interaction sequence:** API validates and persists a run request, coordination wakes worker, worker issues a typed runtime task, runtime emits incremental events and returns a terminal result, worker integrates and gates the code, then records final artifacts. The implemented P0 API exposes authenticated `POST /v1/tasks` and `GET /v1/runs/{id}` and atomically stores Task plus queued Run. The [worker claim/completion contract](../../repositories/caf-control-api/docs/worker-contract.md) is proposed but unimplemented; event delivery and ordering guarantees are **decision pending**.
 
 ## Runtime adapter boundary
 

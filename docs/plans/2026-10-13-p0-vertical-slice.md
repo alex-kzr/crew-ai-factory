@@ -17,6 +17,8 @@ Execution: [parallel: P0S-01, P0S-02, P0S-03], followed by [same-session: P0S-04
 
 Execution: same-session after Milestone 1. Verify Codex/Claude non-interactive flags and one safe invocation each using existing CLI profiles, then build a small real API/worker/runtime/Redis/Postgres slice. Use one Docker Compose **project** named `caf`, with named profiles/groups and one `scripts/services.sh` entrypoint; do not touch other projects' containers, ports, volumes or data. Decide runtime host/container location through a tested threat model. Test `core` startup, readiness, cancellation, persistence and restart recovery. Do not add a paid model/API fallback or new credential workflow without user decision.
 
+**Partial result, 2026-10-13:** Host adapters, a successful no-tools Claude call, authenticated API task intake, and a provisional API/PostgreSQL Compose definition are implemented. Codex execution failed with an authentication diagnostic. The worker is not a daemon; containers were not started. See the [measured follow-up](../experiments/2026-10-13-flow-cli-and-api.md). This milestone is open.
+
 ## Milestone 3: comparable experiment
 
 Execution: after shared schema and gates are stable. Run Modes A, B and C on identical sample commit/task/limits. Verify CrewAI manager/backend requirements, separate model API cost from CLI usage, record outcomes and write a verdict under `docs/experiments/`. Later P2–P4 remain governed by [scope](../requirements/scope.md).

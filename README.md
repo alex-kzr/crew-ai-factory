@@ -2,7 +2,7 @@
 
 CAF is an independent experiment in orchestrating Codex CLI and Claude Code as external coding agents with CrewAI. Its question is whether CrewAI adds measurable value over an equivalent Python `asyncio` workflow.
 
-**Status:** first synthetic P0 slice verified: a provider-neutral in-process runtime contract, sample benchmark fixture, asyncio workflow, and external-worktree integration test. A provisional Compose core profile now defines the API and PostgreSQL, with static configuration checks only. Real Codex/Claude adapters, a worker daemon, UI, full core startup, recovery and benchmark verdict remain pending. [SPEC.md](SPEC.md) is the authoritative source for the full target and acceptance criteria.
+**Status:** the first synthetic P0 slice is verified: a provider-neutral runtime contract, sample fixture, asyncio baseline, CrewAI Flow mode, and external-worktree integration test. Host Codex/Claude adapters and an authenticated control API are implemented; Claude passed a no-tools smoke call, while Codex task execution failed with an authentication diagnostic. A provisional Compose core profile defines API and PostgreSQL, with static configuration checks only. A worker daemon, UI, full core startup, recovery and benchmark verdict remain pending. [SPEC.md](SPEC.md) is the authoritative source for the full target and acceptance criteria.
 
 ## Navigate
 

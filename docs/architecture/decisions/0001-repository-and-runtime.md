@@ -7,7 +7,7 @@ Source: [SPEC §§4–6, 9, 12–13](../../../SPEC.md)
 
 The umbrella owns docs, eventual deployment/config/scripts/integration tests and pins five independently managed repositories as Git submodules: `control-api`, `orchestration-worker`, `agent-runtime`, `web-ui`, `sample-app`. PostgreSQL, Redis and optional observability use infrastructure images/config rather than extra application repositories. This matches the logical ownership boundaries in SPEC §5 without splitting every dependency into a separate source repository.
 
-The runtime, worker and sample repositories now have a tested synthetic contract/fixture; API and UI remain initial scaffolds. The synthetic slice is documented in the [experiment report](../../experiments/2026-10-13-synthetic-baseline.md). The configured submodule URLs are the user-provided GitHub repositories; their initial commits were published and a fresh recursive clone succeeded on 2026-10-13. See [publication steps](../../development/repositories.md).
+The runtime, worker and sample repositories have a tested synthetic contract/fixture. Runtime host CLI adapters, CrewAI Flow mode and a control API slice have since been implemented; UI remains an initial scaffold. The [synthetic](../../experiments/2026-10-13-synthetic-baseline.md) and [follow-up](../../experiments/2026-10-13-flow-cli-and-api.md) reports distinguish verified behavior from pending integration. The configured submodule URLs are the user-provided GitHub repositories; their initial commits were published and a fresh recursive clone succeeded on 2026-10-13. See [publication steps](../../development/repositories.md).
 
 ## Decision pending: execution location
 
@@ -15,7 +15,7 @@ The runtime must remain a separate contract, but its first process location is u
 
 ## Other open questions
 
-- Exact CLI flags, structured event formats and resume support for the installed versions.
+- Successful Codex execution with the existing profile; write-capable CLI paths, complete event/usage parsing and session resume.
 - CrewAI version, manager LLM backend, API key/cost requirements in Mode A, and state recovery guarantees.
 - Queue/transport and exact API/event schemas; checkpoint and event ordering semantics.
 - Safe partial group stop behavior when services share stores.
