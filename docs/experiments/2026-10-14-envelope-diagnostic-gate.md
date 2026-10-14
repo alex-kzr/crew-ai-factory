@@ -141,8 +141,45 @@ adds `--disallowedTools "mcp__*"` to its Claude argv; the installed 2.1.296
 help confirms the option. This is a forward-looking gate correction and does
 not prove whether any MCP tool was available in the measured Run. No new
 live call was made to check the combined flags.
+
 The installed help also states that `--strict-mcp-config` uses only servers
 supplied by `--mcp-config`; the argv now includes the strict flag and supplies
 no MCP config. This closes the startup configuration path independently of
 the MCP deny pattern. The combination is checked in offline argv tests, not
 through another model call.
+
+## One approved array-shape diagnostic Run
+
+After publishing and verifying runtime
+`526c16ee658de6b955e2c860dd2c641d9e7d67ac`, worker
+`117b5dec5c1e8e3090e73906d7665d539dfc028b`, and umbrella
+`3832f473462bb375842207ff0bae87505af94d2f`, one approved plan-only
+Run used sample base `e12f4d8293ea0dd8a5e18c3006af803c4d429b56`,
+the existing Claude subscription, an exact one-Run grant and isolated
+database `caf_queue_test_plan_5a51c51d`. The worker installation matched the
+published runtime SHA. A preflight checked the no-tools argv, including
+`--tools ""`, `--disallowedTools "mcp__*"`, `--strict-mcp-config` and the
+absence of `--mcp-config`. This checks the assembled flags; it is not direct
+observation of Claude's internal tool availability.
+
+Run `57847cc9-93a5-4cd6-a38f-ee0fe5402976` finished `failed` after one
+attempt. Its only Flow stage was `plan`, with zero iterations. The fixed
+diagnostic recorded `category=envelope`, `reason=root_type`,
+`root_type=array`, `framing=single_json`, `response_source=rejected_envelope`,
+and `parser_outcome=not_run`. The bounded array fields were length 5,
+non-object count 0, `type=result` count 1, sole result position `last`,
+top-level `structured_output` count 1, and error-indicator count 0. The
+captured stdout byte count was 11,159. These facts are consistent with a
+collection containing a terminal result, but do not establish the semantics
+or contents of the other entries. The array was rejected; no plan value,
+writer, review, correction, diff, commit or gate artifact was produced.
+
+The journal events were `claimed` and `completed`. The temporary API and
+worker stopped, removing access to the process-scoped grant; the test
+PostgreSQL container stopped while its named volume and database remain for
+audit. The temporary API port had no listener after cleanup, and the sample
+checkout remained clean at the pinned base. The persistent CAF API was not
+touched. The safe JSON evidence is outside Git at
+`C:\Users\admin\Documents\Codex\2026-10-13\task-3\caf_plan_array_diagnostic_live_evidence.json`.
+There was no second inference call. Root-array acceptance still requires a
+verified vendor contract and explicit review before another live attempt.
