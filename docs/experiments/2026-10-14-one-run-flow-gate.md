@@ -41,3 +41,40 @@ diagnosis** of the live failure. The one authorized Run is spent. A subsequent
 real Flow Run, including implementation, tests, review and any correction,
 requires a separate bounded approval and should record a safe, specific stage
 failure reason without storing model text.
+
+## Retrospective diagnostic gap
+
+The original `plan_agent` value merges two paths in the code that ran: Claude
+CLI could exit nonzero with an unrecognized agent error, or it could exit 0
+and return text rejected by the plan parser. The reported 13.1-second elapsed
+time and `agent` failure class do not distinguish those paths. Timeout has a
+separate failure class in the adapter. The stored artifact omitted CLI exit
+code, captured response size, parse outcome and a safe stage category. The
+isolated database was dropped during the approved cleanup, and neither model
+text nor a detailed CLI result was retained. The exact cause is therefore
+**not recoverable from available evidence**.
+
+An offline-only change now records a fixed-shape diagnostic for Flow plan and
+review: stage phase, correlation ID, category, provider status/failure class,
+exit code, size of the redacted and capped response capture, input format and
+parser outcome. No stdout, stderr, raw prompt or transcript enters this
+diagnostic. Complete plain JSON and one complete JSON code fence are supported;
+extra prose and invalid schema remain rejected. Synthetic fixtures cover
+those formats and failure classes, but do not prove how Claude responded in
+the previous Run.
+
+The smallest next live experiment, if separately approved, is one isolated
+no-tools plan attempt with this diagnostic enabled. The current
+`p0_flow_worker` continues into implementation after a valid plan, so a
+plan-only entrypoint or an explicit stop-after-plan gate must first be built
+and verified offline. Inspect the terminal Run's category and parser outcome
+before deciding whether any broader coding Run is warranted. Keep the test
+database and its audit records, stop the container and revoke the exact-Run
+grant; do not drop the database as part of automatic cleanup. No new model
+call or grant was made for this diagnosis.
+
+A separate read-only review of this change found no critical diagnostic
+leakage. It noted that `auth_limit` is an error signal rather than a proven
+provider cause, and that structured review findings remain part of the
+ordinary Run artifact outside this fixed-shape diagnostic. Those findings
+must not be copied into the safe experiment summary.

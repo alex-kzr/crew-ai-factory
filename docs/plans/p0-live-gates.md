@@ -19,7 +19,9 @@ permission grants:
 3. Use at most one additional controlled failure Run for real CLI process
    termination, lease expiry, quarantine and no automatic replay. Revoke
    temporary grants, stop isolated services, and remove disposable worktrees
-   after evidence capture. Do not push, merge, deploy or touch shared data.
+   after evidence capture. Preserve an isolated database that contains Run
+   audit records and stop its container; dropping it needs separate approval.
+   Do not push, merge, deploy or touch shared data.
 4. Check the new results/events routes against that isolated PostgreSQL/API
    instance and read the one approved Run via the host UI. Confirm the raw
    artifact is absent from the browser status response and handle snapshot
