@@ -2,7 +2,7 @@
 
 Source: [SPEC sections 5, 9-12 and 14-16](../../SPEC.md). Status: **offline
 preview and optional host-only one-Run read implemented; live integration and
-real CLI recovery open**.
+full production CLI recovery open**.
 
 ## P0 UI preview
 
@@ -22,16 +22,20 @@ credentials, and strips the opaque artifact from the status response. The
 results projection is **not** secret redaction of free text; only view Runs
 appropriate for local display. Loopback access does not authenticate a human
 user. The server does not submit or cancel Runs, and its three separate reads
-can race during a transition. UI and server mock tests do not prove a live
-PostgreSQL API integration. See the [inspection contract](../architecture/run-inspection-contract.md).
+can race during a transition. One isolated PostgreSQL/API and same-origin
+HTTP read passed on 2026-10-14; a visual browser acceptance test and human
+identity authentication remain open. See the [inspection contract](../architecture/run-inspection-contract.md)
+and [evidence](../experiments/2026-10-14-p0-live-run-and-crash.md).
 
 The API still lacks a task list, service status and full workflow event
 stream. This preview does not demonstrate P4 acceptance.
 
-## Minimal filtered-environment CLI check (planned, not executed here)
+## Minimal filtered-environment CLI check
 
-No new credential needs to be created **if** the operator's already verified
-host CLI profiles remain valid. With a clean checkout, use the exact native
+The filtered-environment status check passed for both installed CLIs on
+2026-10-14 without printing auth output. No new credential was created.
+For a repeat, verify that the existing host CLI profiles remain valid. With a
+clean checkout, use the exact native
 Codex executable recorded in [environment facts](environment.md) and the
 resolved Claude executable; first verify both versions. Launch each CLI's
 read-only login status command as a direct argument array with
@@ -42,10 +46,9 @@ exit category and whether the filtered environment excluded CAF worker and
 model tokens. Do not print or store authentication material. A status check
 would confirm login visibility, **not** successful model execution.
 
-A later, separately bounded no-tools CLI smoke would be needed to verify
-provider execution under the filtered environment. A still later controlled
-crash test would need to confirm real CLI process-tree cleanup and durable
-quarantine; the completed [disposable-child test]
-(../experiments/2026-10-13-postgres-http-crash-restart.md) does not cover
-provider processes. Neither later step is authorized or performed by this
-document.
+A normal Run exercised Codex implementation and Claude review, while a
+controlled real Codex child crash and durable quarantine passed another
+isolated check; see the
+[measured result](../experiments/2026-10-14-p0-live-run-and-crash.md). These
+measurements do not establish all provider process-tree behavior or complete
+SPEC P0 acceptance.

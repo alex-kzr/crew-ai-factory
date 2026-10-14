@@ -19,8 +19,8 @@ ascending `seq`, with `seq`, `attempt`, `event`, `owner`, `terminal_status`,
 and `created_at`. `after_seq` is exclusive; the limit is 1–100. The current
 PostgreSQL `run_journal` records `claimed`, `completed` and `quarantined`.
 This is lease history, not a full CrewAI Flow event stream. Unknown Run is
-404. These endpoints have authenticated unit tests, but the new SQL-backed
-HTTP path is not yet live-tested.
+404. These endpoints have authenticated unit tests. Their SQL-backed HTTP
+path passed one isolated Run check on 2026-10-14; see the [evidence](../experiments/2026-10-14-p0-live-run-and-crash.md).
 
 The optional web host server accepts only GETs for one configured Run UUID
 on loopback, uses an existing server-side API bearer, does not forward

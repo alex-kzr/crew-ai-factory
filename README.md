@@ -2,13 +2,14 @@
 
 CAF is an independent experiment in orchestrating Codex CLI and Claude Code as external coding agents with CrewAI. Its question is whether CrewAI adds measurable value over an equivalent Python `asyncio` workflow.
 
-**Status:** the first synthetic P0 slice is verified: a provider-neutral runtime contract, sample fixture, asyncio baseline, CrewAI Flow mode, and external-worktree integration test. Host Codex/Claude adapters and an authenticated control API are implemented. A bounded Codex edit on the sample fixture passed both acceptance suites; Claude approved its saved diff with no findings, and the reviewed change is a local, unpushed sample commit. This isolated CLI experiment is not a queued production run. The provisional Compose `core` slice starts API and PostgreSQL with healthy containers, reachable loopback endpoints, tested task intake, cancellation and transactional queue operations. A test-only worker bridge and an executor-neutral lease-aware dispatch boundary passed isolated database tests. A production worker daemon, verified orphan CLI cleanup, complete SPEC core group, UI and benchmark verdict remain pending. [SPEC.md](SPEC.md) is the authoritative source for the full target and acceptance criteria.
+**Status:** the synthetic P0 slice, host Codex/Claude adapters and authenticated control API have passed bounded checks. In a later isolated test, one queued Run produced a Codex edit, passed both sample suites and received Claude approval; another Run verified real Codex child exit, lease-expiry quarantine and no replay. The one-Run host UI read path passed an isolated HTTP check. These are fixture-specific gates. A production worker daemon, complete SPEC core group, full CrewAI Flow/correction in one Run, multi-user UI and benchmark verdict remain pending. [SPEC.md](SPEC.md) is the authoritative source for the full target and acceptance criteria.
 
 The `caf-web-ui` submodule has a task JSON builder, local Run inspector and
 optional host-only read of one configured existing Run through a server-held
 API bearer. The example is fabricated. The page cannot submit or cancel Runs;
-the host path has mock coverage but no live API integration yet. See [its
-boundary and checks](docs/development/ui-preview-and-cli-gates.md).
+the host path passed one isolated API/HTTP read on 2026-10-14. See [its
+boundary and checks](docs/development/ui-preview-and-cli-gates.md) and the
+[measured evidence](docs/experiments/2026-10-14-p0-live-run-and-crash.md).
 
 ## Navigate
 

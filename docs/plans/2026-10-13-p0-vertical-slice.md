@@ -24,7 +24,7 @@ Execution: same-session after Milestone 1. Verify Codex/Claude non-interactive f
 1. [x] Preserve a queued sample diff, acceptance results, structured cross-provider review and local commit with source-Run provenance. This used an explicitly labeled continuation Run, not a full autonomous correction loop in one Run.
 2. [x] Test controlled Windows runtime-host exit and a breakaway request with only fixture processes; test durable lease/journal and no replay after a test worker exits abruptly. These observations define a supported, narrow process mode, not universal isolation.
 3. [x] Run a Compose worker against an isolated PostgreSQL queue and synthetic runtime; keep the shared CAF queue empty.
-4. [ ] Complete the host transport boundary. An exact, expiring one-Run API grant and child-environment filtering have dummy-token and isolated SQL tests; a persistent synthetic daemon passed separate database tests. An approved temporary host loopback HTTP check passed for one synthetic Run, including claim/ACK, foreign-Run denial and revocation; see [evidence](../experiments/2026-10-13-scoped-http-procedure.md#measured-result-2026-10-13). Exact host workspace mapping and a private worktree root pass [offline checks](../experiments/2026-10-13-offline-workspace-and-recovery.md). A further approved [PostgreSQL and HTTP crash/restart check](../experiments/2026-10-13-postgres-http-crash-restart.md) passed with one disposable child, real lease expiry, durable quarantine and no replay. Provider login with the filtered environment and real CLI crash behavior remain unverified. Connect an always-on real worker to `core` only after separate boundary tests and approval.
+4. [ ] Complete the host transport boundary. An exact, expiring one-Run API grant and child-environment filtering have dummy-token and isolated SQL tests; a persistent synthetic daemon passed separate database tests. An approved temporary host loopback HTTP check passed for one synthetic Run, including claim/ACK, foreign-Run denial and revocation; see [evidence](../experiments/2026-10-13-scoped-http-procedure.md#measured-result-2026-10-13). Exact host workspace mapping and a private worktree root pass [offline checks](../experiments/2026-10-13-offline-workspace-and-recovery.md). A further approved [PostgreSQL and HTTP crash/restart check](../experiments/2026-10-13-postgres-http-crash-restart.md) passed with one disposable child. Filtered-environment provider login and one real Codex child crash, lease expiry, durable quarantine and no replay passed a later [isolated gate](../experiments/2026-10-14-p0-live-run-and-crash.md). Full production worker recovery remains unverified. Connect an always-on real worker to `core` only after separate boundary tests and approval.
 5. [ ] Run actual CrewAI Flow plan → Codex implementation → Claude review → bounded Codex correction → tests in one durable Run, with a negative-review case and repeatable restart/cancel behavior.
 6. [ ] Extend and test the complete `core` group and optional-group status/log commands; keep unrelated containers and shared dependencies safe. Redis remains a design decision because PostgreSQL currently holds queued Runs.
 7. [ ] Persist the remaining SPEC events, checkpoints, findings, gate results and metrics, then run comparable A/B/C experiments on identical inputs. Verify Mode A's manager backend and separate API-model cost.
@@ -32,10 +32,12 @@ Execution: same-session after Milestone 1. Verify Codex/Claude non-interactive f
 A [UI inspection workbench](../development/ui-preview-and-cli-gates.md) covers
 task-body validation and local Run inspection. An optional host-only server
 uses an existing API bearer to read one configured Run's status, typed results
-and lease journal. This is mock-tested, not live-verified against PostgreSQL,
-and offers no human identity auth, full events or service controls. The
-[consolidated live gates](p0-live-gates.md) include filtered-environment CLI
-checks, real provider execution and real CLI recovery; these remain open.
+and lease journal. One isolated PostgreSQL/API and same-origin HTTP read
+passed on 2026-10-14; see the [measured gate](../experiments/2026-10-14-p0-live-run-and-crash.md).
+The page offers no human identity auth, full events or service controls. One
+normal CLI Run and one real Codex child crash/quarantine passed, but complete
+CrewAI Flow, bounded correction in one Run and full production recovery
+remain open.
 
 ## Milestone 3: comparable experiment
 
