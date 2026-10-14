@@ -97,3 +97,39 @@ was not touched. The safe machine-readable evidence is outside Git at
 `C:\Users\admin\Documents\Codex\2026-10-13\task-3\caf_plan_envelope_live_evidence.json`.
 No second live attempt was made. Further work should inspect the static CLI
 contract and actual argument assembly offline before requesting another Run.
+
+## Offline investigation of the array root
+
+The installed Claude Code 2.1.296 `--help` confirms the flags used by the
+runtime. The plan argv is an argument array with `--print --verbose
+--output-format json`, `--json-schema` containing an object-root plan schema,
+`--tools ""`, `--restricted`, `--permission-mode dontAsk`,
+`--permission-prompts none`, and `--no-session-persistence`. The worker sends
+the prompt on stdin. On Windows, the supervised launcher passes child stdout
+directly to the runtime pipe; the runtime collects bytes and decodes one JSON
+value. Neither the supervisor nor the worker wraps stdout in an array.
+
+The [official programmatic CLI contract](https://code.claude.com/docs/en/headless#get-structured-output)
+describes `json` as a response with metadata and top-level
+`structured_output`. It describes newline-delimited event objects for
+`stream-json`. The [CLI reference](https://code.claude.com/docs/en/cli-reference)
+defines `--verbose` as full turn-by-turn output, but does not specify an
+array container for its combination with `--output-format json`. No inspected
+official source establishes that a root array is a valid result envelope for
+the pinned combination. The prior array contents were not retained; they
+cannot be reconstructed or classified as events, results or an error.
+
+The offline parser still rejects every root array. It now records only six
+bounded shape fields: array length, non-object count, `type=result` count,
+top-level `structured_output` count, error-indicator count, and whether a
+sole result is last. Counts saturate at 1,001. Item contents, provider field
+names and values never enter the diagnostic. Synthetic arrays with no result,
+one terminal result, multiple results, and an error all remain rejected, with
+the plan parser marked `not_run`.
+
+If another Run is separately authorized, these fields are the minimum safe
+evidence needed to distinguish a likely event collection from a different
+array shape. Even a sole last result would remain rejected until an official
+contract or equivalent installed vendor code confirms that container format
+and its success/error rules. No new model call, grant or publication was made
+for this investigation.
