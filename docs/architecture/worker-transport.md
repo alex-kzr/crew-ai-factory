@@ -1,7 +1,7 @@
 # Host worker transport boundary
 
 Source: [SPEC sections 5, 9-12 and 16](../../SPEC.md). Status: **scoped
-contract implemented and tested with dummy tokens; disabled in live core**.
+test-only contract implemented; no persistent real-CLI worker in core**.
 
 ## Supported boundary
 
@@ -47,7 +47,16 @@ bound the **test fixture**; a worktree is not a security sandbox and this does
 not make arbitrary user code safe for automatic dispatch. CLI, Git and test
 children now receive an explicit minimal environment with OS lookup and user
 profile/provider config paths. Worker/database tokens and model API keys are
-excluded. Provider login has not been retested since this environment change.
+excluded. A bounded [live check](../experiments/2026-10-14-p0-live-run-and-crash.md)
+subsequently verified provider login with this environment for the fixture.
+
+An opt-in [Flow fixture entrypoint](../../repositories/caf-orchestration-worker/README.md#one-run-flow-fixture)
+now maps one claimed sample Run to a structured Claude plan, Codex edit,
+Claude review, bounded Codex correction and deterministic acceptance gates.
+The plan and correction route through the same CrewAI Flow and Run ID. Its
+real-provider path is **unverified**; offline fake-CLI tests cover one rejected
+review, one correction and passing gates in one Run. It uses the exact test
+database and workspace scope, and does not start automatically.
 
 ## Failure behavior
 
@@ -77,18 +86,27 @@ Run refusal, wrong workspace refusal, exact claim, renewal, completion and
 journal readback. Worker tests verified loopback/proxy/redirect handling and
 credential-free errors. A native child-process test verified that dummy
 worker/model tokens did not reach a launched process. With explicit approval,
-a [temporary synthetic HTTP check]
-(../experiments/2026-10-13-scoped-http-procedure.md#measured-result-2026-10-13)
+a [temporary synthetic HTTP check](../experiments/2026-10-13-scoped-http-procedure.md#measured-result-2026-10-13)
 then passed over a real loopback socket for one isolated Run, including
 foreign-Run denial and revocation. Its ephemeral token and processes were
-removed. Core Compose does not pass `CAF_WORKER_TOKEN` through and no live
-core grant, real provider login retest or long-lived real CLI worker is
-claimed. An [offline host crash check]
-(../experiments/2026-10-13-offline-workspace-and-recovery.md) passed with a
+removed. Core Compose does not pass `CAF_WORKER_TOKEN` through and no
+long-lived real CLI worker is claimed. An [offline host crash check](../experiments/2026-10-13-offline-workspace-and-recovery.md) passed with a
 disposable Python child and fake in-memory queue state; it does not prove
 PostgreSQL crash recovery or real CLI containment. A later, separately
-approved [PostgreSQL and HTTP crash/restart check]
-(../experiments/2026-10-13-postgres-http-crash-restart.md) verified real lease
+approved [PostgreSQL and HTTP crash/restart check](../experiments/2026-10-13-postgres-http-crash-restart.md) verified real lease
 expiry, durable quarantine and no replay after API restart for one disposable
-Python child. Real CLI containment and provider login with the filtered child
-environment remain unverified. These checks do not enable real CLI dispatch.
+Python child. The later [bounded live fixture](../experiments/2026-10-14-p0-live-run-and-crash.md)
+verified a Codex child crash, lease expiry and durable quarantine with no
+replay, plus a successful single-code Run and provider login. It did not run
+the new Flow fixture or establish unattended production dispatch.
+
+## Production worker decision pending
+
+The current API grant addresses exactly one Run and expires within an hour.
+An always-on worker needs an explicit identity and authorization design for
+multiple Runs, renewal/revocation, task and workspace admission, and scoped
+recovery. The host runtime also needs a tested lifecycle with core Compose,
+while existing CLI profiles remain on the host. Do not convert the one-Run
+grant into a wildcard or silently add the host CLI worker to the Compose
+group. Verify those boundaries and the complete Flow acceptance path before
+claiming production P0 worker wiring.
