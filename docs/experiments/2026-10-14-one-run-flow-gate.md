@@ -80,3 +80,6 @@ leakage. It noted that `auth_limit` is an error signal rather than a proven
 provider cause, and that structured review findings remain part of the
 ordinary Run artifact outside this fixed-shape diagnostic. Those findings
 must not be copied into the safe experiment summary.
+
+The later [plan-only schema gate](2026-10-14-plan-only-schema-gate.md) records
+the separately approved plan-only Run and its subsequent offline contract fix.
