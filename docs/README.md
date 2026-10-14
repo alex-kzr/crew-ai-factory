@@ -13,6 +13,7 @@
 | Scoped host HTTP evidence | [One-Run synthetic HTTP result](experiments/2026-10-13-scoped-http-procedure.md), [offline workspace and recovery check](experiments/2026-10-13-offline-workspace-and-recovery.md), [PostgreSQL crash/restart check](experiments/2026-10-13-postgres-http-crash-restart.md) |
 | Real CLI and host UI evidence | [Bounded P0 Run and crash gate](experiments/2026-10-14-p0-live-run-and-crash.md) |
 | One-Run Flow live result | [Flow plan-stage gate](experiments/2026-10-14-one-run-flow-gate.md) |
+| Plan envelope rejection and offline diagnostic | [Envelope diagnostic gate](experiments/2026-10-14-envelope-diagnostic-gate.md) |
 | Repository ownership | [Repositories](development/repositories.md) |
 | UI inspection and remaining CLI gates | [UI boundary and host checks](development/ui-preview-and-cli-gates.md), [consolidated live gates](plans/p0-live-gates.md) |
 | P0 execution | [Plan](plans/2026-10-13-p0-vertical-slice.md), [board](kanban.md), [environment facts](development/environment.md) |

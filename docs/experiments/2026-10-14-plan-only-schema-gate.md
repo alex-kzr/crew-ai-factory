@@ -60,3 +60,7 @@ corrections and a preserved isolated audit database. Inspect only the safe
 response source, parser outcome and schema error code before considering a
 coding Run. No additional Run, grant or model call was made in the offline
 correction.
+
+The later [envelope diagnostic gate](2026-10-14-envelope-diagnostic-gate.md)
+records a separate exit-zero plan-only Run whose envelope was rejected and an
+offline correction to the resulting misleading `empty_output` label.
