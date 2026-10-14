@@ -46,6 +46,13 @@ pathological-JSON, and worker queue fixtures cover the path. These tests prove
 the offline adapter and worker behavior, not the shape of the earlier live
 response or a successful Claude structured-output call.
 
+Independent review found that an escaped lone Unicode surrogate could raise
+`UnicodeEncodeError` during the structured-value byte count, bypassing the
+fixed diagnostic. An offline follow-up classifies it as `malformed_json` with
+`invalid_json` framing before persistence. High and low lone surrogates,
+one valid surrogate pair, and the worker's `not_run` path have regression
+tests. This is a parser robustness fix, not a finding about the prior Run.
+
 ## Next minimal experiment
 
 After publishing and pinning the runtime and worker changes, run at most one
