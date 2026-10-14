@@ -133,3 +133,11 @@ array shape. Even a sole last result would remain rejected until an official
 contract or equivalent installed vendor code confirms that container format
 and its success/error rules. No new model call, grant or publication was made
 for this investigation.
+
+Independent review of the offline change identified one further no-tools
+gap: `--tools ""` does not disable MCP tools under the [official CLI
+reference](https://code.claude.com/docs/en/cli-reference). The runtime now
+adds `--disallowedTools "mcp__*"` to its Claude argv; the installed 2.1.296
+help confirms the option. This is a forward-looking gate correction and does
+not prove whether any MCP tool was available in the measured Run. No new
+live call was made to check the combined flags.
