@@ -65,3 +65,35 @@ the fixed reason to choose a narrow offline correction. If it is accepted,
 assess the local plan parser result before considering any coding Run. Preserve
 the audit database and stop temporary processes. No Run, model call, grant, or
 container start occurred for this offline correction.
+
+## Single approved live check after publication
+
+The runtime `e1982f807d85905999f0b710c1810c90b26003b5`, worker
+`d85a61e56242a42ea2cb14e50e361f1ab64b1d74`, and umbrella
+`0368502ed6b0f384b4b356c7ddfd09664e57cbca` were published and verified
+on their `main` remotes in that order. The worker's installed runtime
+provenance matched the pinned runtime SHA. One approved no-tools plan-only
+Run used sample base `e12f4d8293ea0dd8a5e18c3006af803c4d429b56`, one
+temporary exact-Run grant, the existing Claude subscription, and isolated
+database `caf_queue_test_plan_1fec3b0f`. Run
+`71c55191-f6ff-490e-a8b6-fcac78d386b3` finished `failed` after one
+attempt. Its only stage was `plan`; iterations were zero and no coding,
+review, correction, diff, commit, or gate artifact was produced.
+
+The safe terminal diagnostic is `category=envelope`,
+`response_source=rejected_envelope`, `envelope.reason=root_type`,
+`envelope.framing=single_json`, `envelope.root_type=array`, and
+`parser_outcome=not_run`. The capped stdout count was 10,792 bytes. The
+diagnostic shows a root-shape mismatch and confirms that the plan parser did
+not mislabel this rejection as `empty_output`. It does not establish the
+array's contents or why Claude Code emitted it; no raw response was saved.
+Audit events were `claimed` and `completed`.
+
+The worker and temporary API stopped, the temporary grant was revoked by
+stopping that API, and the dedicated test PostgreSQL container stopped. Its
+named volume remains attached, preserving the isolated database and audit.
+The sample checkout stayed clean at the pinned base; the persistent CAF API
+was not touched. The safe machine-readable evidence is outside Git at
+`C:\Users\admin\Documents\Codex\2026-10-13\task-3\caf_plan_envelope_live_evidence.json`.
+No second live attempt was made. Further work should inspect the static CLI
+contract and actual argument assembly offline before requesting another Run.
