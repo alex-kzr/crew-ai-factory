@@ -183,3 +183,27 @@ touched. The safe JSON evidence is outside Git at
 `C:\Users\admin\Documents\Codex\2026-10-13\task-3\caf_plan_array_diagnostic_live_evidence.json`.
 There was no second inference call. Root-array acceptance still requires a
 verified vendor contract and explicit review before another live attempt.
+
+## Documented transport prepared offline
+
+The safe shape diagnostic does not establish an array contract, even though
+the observed array had one last `type=result` object. The installed CLI help
+and the [official structured-output example](https://code.claude.com/docs/en/headless#get-structured-output)
+support `--output-format json --json-schema` for a single response envelope
+whose top-level `structured_output` contains the schema-constrained value.
+The example does not add `--verbose`. The [official streaming example](https://code.claude.com/docs/en/headless#stream-responses)
+uses `--output-format stream-json --verbose` and describes separate event
+objects with a last `result` line. It does not establish an array wrapper for
+the prior JSON invocation, or the structured-output contract for combining
+`stream-json` with `--json-schema`.
+
+The runtime now omits `--verbose` only for operations with a structured
+schema. This selects the documented JSON invocation for `plan`; unstructured
+operations retain their existing streaming argv. The JSON decoder still
+rejects every root array, multiple JSON values, duplicate keys, missing or
+ambiguous success fields, provider errors, oversized values, and sensitive
+structured output. The plan schema and worker gate are unchanged. Synthetic tests check
+the argv and array rejection. This is an offline transport correction, not a
+claim that Claude Code 2.1.296 has produced a valid envelope with this exact
+invocation. A later live Run needs separate authorization and a fresh scoped
+grant; the finished Run above must not be retried.
