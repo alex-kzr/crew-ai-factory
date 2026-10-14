@@ -64,14 +64,16 @@ those formats and failure classes, but do not prove how Claude responded in
 the previous Run.
 
 The smallest next live experiment, if separately approved, is one isolated
-no-tools plan attempt with this diagnostic enabled. The current
-`p0_flow_worker` continues into implementation after a valid plan, so a
-plan-only entrypoint or an explicit stop-after-plan gate must first be built
-and verified offline. Inspect the terminal Run's category and parser outcome
-before deciding whether any broader coding Run is warranted. Keep the test
-database and its audit records, stop the container and revoke the exact-Run
-grant; do not drop the database as part of automatic cleanup. No new model
-call or grant was made for this diagnosis.
+no-tools plan attempt with this diagnostic enabled. An offline follow-up added
+`p0_plan_worker`, a separate one-Run entrypoint that accepts only a Claude
+claim with zero corrections and terminates after the plan. It does not
+construct the Codex runtime. Tests cover valid and invalid plans and show no
+writer, review or correction call. The plan-only path is **not live verified**.
+Inspect the terminal Run's category and parser outcome before deciding whether
+any broader coding Run is warranted. Keep the test database and its audit
+records, stop the container and revoke the exact-Run grant; do not drop the
+database as part of automatic cleanup. No new model call or grant was made for
+this offline follow-up.
 
 A separate read-only review of this change found no critical diagnostic
 leakage. It noted that `auth_limit` is an error signal rather than a proven
