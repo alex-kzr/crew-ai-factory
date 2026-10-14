@@ -141,3 +141,8 @@ adds `--disallowedTools "mcp__*"` to its Claude argv; the installed 2.1.296
 help confirms the option. This is a forward-looking gate correction and does
 not prove whether any MCP tool was available in the measured Run. No new
 live call was made to check the combined flags.
+The installed help also states that `--strict-mcp-config` uses only servers
+supplied by `--mcp-config`; the argv now includes the strict flag and supplies
+no MCP config. This closes the startup configuration path independently of
+the MCP deny pattern. The combination is checked in offline argv tests, not
+through another model call.
