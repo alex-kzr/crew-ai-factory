@@ -200,10 +200,20 @@ the prior JSON invocation, or the structured-output contract for combining
 The runtime now omits `--verbose` only for operations with a structured
 schema. This selects the documented JSON invocation for `plan`; unstructured
 operations retain their existing streaming argv. The JSON decoder still
-rejects every root array, multiple JSON values, duplicate keys, missing or
-ambiguous success fields, provider errors, oversized values, and sensitive
+rejects every root array, multiple JSON values, duplicate keys, invalid
+success/error indicators, provider errors, oversized values, and sensitive
 structured output. The plan schema and worker gate are unchanged. Synthetic tests check
 the argv and array rejection. This is an offline transport correction, not a
 claim that Claude Code 2.1.296 has produced a valid envelope with this exact
 invocation. A later live Run needs separate authorization and a fresh scoped
 grant; the finished Run above must not be retried.
+
+The worker's `pyproject.toml` and `uv.lock` now pin the local runtime commit
+`5ddab9e6112ef81f1999cbfc6d0c2e8327c8b6bb` using the unchanged GitHub
+source. An offline `uv lock` against that source cannot fetch an unpublished
+commit. A temporary worker copy instead resolved the sibling runtime as a
+local path and ran the Flow test suite on Python 3.12; this check does not
+validate the committed Git source or the lockfile's Git fetch. After runtime
+publication, verify the worker in a fresh clone with `uv lock --check` and
+`uv sync --locked --python 3.12 --extra flow --group dev`, then run its tests before any
+new live invocation. Do not publish the worker or umbrella gitlink first.
